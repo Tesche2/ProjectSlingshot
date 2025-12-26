@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,14 +9,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxThrusterSpeed = 10f;
     [SerializeField] private float _sidewaysCoefficient = 0.1f;
     [SerializeField] private float _backwardsCoefficient = 0.2f;
-    [SerializeField] private float _inputDeadZone = 0.5f;
     [SerializeField] private float _torqueCoefficient = 0.001f;
     [SerializeField] private ParticleSystem _thrusterParticles;
 
-    private Rigidbody2D _rb;
     private PlayerInputActions _inputActions;
     private InputAction _moveAction;
     private InputAction _gravityAction;
+    private Vector2 _currentInputVector;
+    private bool _isThrusterActive;
+
+    private Rigidbody2D _rb;
     private List<GravityObject> _nearbyObjects = new();
 
     private void Awake()
@@ -32,37 +33,44 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         _inputActions.Gameplay.Enable();
+
+        _inputActions.Gameplay.Move.performed += ctx => _currentInputVector = ctx.ReadValue<Vector2>();
+        _inputActions.Gameplay.Move.canceled += ctx => _currentInputVector = Vector2.zero;
     }
 
     private void OnDisable()
     {
         _inputActions.Gameplay.Disable();
-    }
+    }    
 
     public void FixedUpdate()
     {
-        Vector2 movementInput = _moveAction.ReadValue<Vector2>();
-        if(movementInput.magnitude > _inputDeadZone)
+        if(_currentInputVector != Vector2.zero)
         {
-            MovePlayer(movementInput);
-            RotatePlayer(movementInput);
+            MovePlayer(_currentInputVector);
+            RotatePlayer(_currentInputVector);
+            _isThrusterActive = true;
         }
-        if(_gravityAction.IsPressed())
+        else
+        {
+            _isThrusterActive = false;
+        }
+
+        if (_gravityAction.IsPressed())
         {
             _rb.AddForce(CalculateGravityInfluence());
-            Debug.DrawRay(this.transform.position, CalculateGravityInfluence());
         }
+    }
 
-        if (_moveAction.WasPressedThisFrame())
+    private void Update()
+    {
+        if (_isThrusterActive)
         {
-            Debug.Log("Pressed!");
-            _thrusterParticles.Play(true);
+            if (!_thrusterParticles.isPlaying) _thrusterParticles.Play();
         }
-
-        if(_moveAction.WasReleasedThisFrame())
+        else
         {
-            Debug.Log("Released!");
-            _thrusterParticles.Stop(true); 
+            if (_thrusterParticles.isPlaying) _thrusterParticles.Stop();
         }
     }
 
@@ -110,30 +118,39 @@ public class PlayerController : MonoBehaviour
      */
     private Vector2 CalculateGravityInfluence()
     {
-        Vector2 influence = new();
+        Vector2 totalForce = Vector2.zero ;
+        Vector2 myPos = transform.position;
 
         foreach (var obj in _nearbyObjects)
         {
-            Vector2 heading = obj.GetPosition() - (Vector2) this.transform.position;
-            influence += obj.gravityForce * heading.normalized / Mathf.Pow(heading.magnitude, 2);
+            Vector2 heading = obj.GetPosition() - myPos;
+            float sqrDist = heading.sqrMagnitude;
+
+            if (sqrDist < 0.001f) continue;
+    
+            totalForce += obj.gravityForce * heading.normalized / sqrDist;
         }
 
-        return influence;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
+        return totalForce;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("Enter");
-        _nearbyObjects.Add(col.gameObject.GetComponent<GravityObject>());
+        if (col.TryGetComponent<GravityObject>(out var gravityObj))
+        {
+            if (!_nearbyObjects.Contains(gravityObj))
+            {
+                _nearbyObjects.Add(gravityObj);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        _nearbyObjects.Remove(col.gameObject.GetComponent<GravityObject>());  
+        if (col.TryGetComponent<GravityObject>(out var gravityObj))
+        {
+            _nearbyObjects.Remove(gravityObj);
+        }
     }
 
     public float getSpeed()
