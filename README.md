@@ -8,14 +8,14 @@
 
 **Project Slingshot** is a mobile-first "runner" where players manipulate gravitational forces to navigate obstacle-courses. The core mechanic involves toggling the rocket's internal gravity receiver to execute precise **gravitational slingshots** around planetary bodies.
 
-![Gameplay Demo](docs/Gameplay.gif)
+![Gameplay Demo](Docs/Gameplay.gif)
 
-## 🎮 Core Mechanics
+## Core Mechanics
 * **Vector-Based Propulsion:** Thruster logic respects conservation of momentum and applies forces relative to current velocity (boosting orthogonal vectors for tighter control).
 * **Gravity Toggling:** Players can dynamically toggle gravitational influence mid-flight to gain momentum or escape orbits.
 * **Time-Trial Focus:** Designed for milliseconds-perfect runs.
 
-## 🚀 Key Features & Tech
+## Key Features & Tech
 
 * **Newtonian Gravity Mechanics:**
   * Custom gravity implementation allowing dynamic toggling of mass influence.
@@ -35,14 +35,14 @@
 * **Allocation-Free Physics Loop:**
   * Gravity calculations rely on cached lists and Trigger events rather than runtime queries (`FindObjectsOfType`), preventing Garbage Collection spikes during gameplay.
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 1.  **Clone** the repository.
 2.  Open in **Unity 6** (Recommended: 6000.3.1f1 or later).
 3.  Open the scene: `_Game/Scenes/SampleScene.unity`.
 4.  Press Play.
     * *Controls:* **WASD** (Thrust), **Space / LMB** (Hold for Gravity).
 
-## 🔜 Roadmap
+## Roadmap
 - [x] Newtonian Gravity Implementation
 - [x] Deterministic Player Controller
 - [x] Dynamic Velocity-Based Camera Zoom
@@ -53,3 +53,5 @@
 
 ---
 *Developed by [Nikolas Tesche](https://www.linkedin.com/in/nikolas-tesche-3112b9167)*
+<br>
+*Placeholder art by [DanProps](https://assetstore.unity.com/packages/2d/gui/space-game-gui-kit-psd-315973)
