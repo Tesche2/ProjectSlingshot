@@ -183,6 +183,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6529554233927252916, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6529554233927252916, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6529554233927252916, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7769293857080362727, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
       propertyPath: gravityForce
       value: 600
@@ -885,7 +897,7 @@ GameObject:
   - component: {fileID: 1479752218}
   - component: {fileID: 1479752217}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Finish Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

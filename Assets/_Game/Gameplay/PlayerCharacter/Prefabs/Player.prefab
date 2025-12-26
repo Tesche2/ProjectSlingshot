@@ -9734,7 +9734,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.5
+    scalar: 0.25
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -14570,7 +14570,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.5
+    scalar: 0.25
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -19415,7 +19415,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.5
+    scalar: 0.25
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -24374,15 +24374,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab49ab458d9e7b408ac172f7b16a8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  thrusterForce: 5
-  maxThrusterSpeed: 10
-  sidewaysCoefficient: 0.1
-  backwardsCoefficient: 0.2
-  moveActionRef: {fileID: 0}
-  gravityActionRef: {fileID: 0}
-  inputDeadZone: 0.5
-  torqueCoefficient: 0.001
-  thrusterParticles: {fileID: 378532445632119026}
+  _thrusterForce: 5
+  _maxThrusterSpeed: 10
+  _sidewaysCoefficient: 0.1
+  _backwardsCoefficient: 0.2
+  _inputDeadZone: 0.5
+  _torqueCoefficient: 0.05
+  _thrusterParticles: {fileID: 378532445632119026}
 --- !u!1 &8343196538657093500
 GameObject:
   m_ObjectHideFlags: 0
@@ -29284,7 +29282,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.5
+    scalar: 0.25
     minScalar: 0
     maxCurve:
       serializedVersion: 2
