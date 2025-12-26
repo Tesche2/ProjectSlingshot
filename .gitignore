@@ -10,6 +10,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/[Aa]ssets/Space_Exploration_GUI_Kit/
+/[Aa]ssets/_[Rr]ecovery/
 *.log
 
 # MemoryCaptures can get excessive in size.
