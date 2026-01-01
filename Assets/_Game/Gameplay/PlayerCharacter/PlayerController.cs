@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CinemachineImpulseSource))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _thrusterForce = 5f;
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _gravityAction;
     private Vector2 _currentInputVector;
     private bool _isThrusterActive;
+    private CinemachineImpulseSource _impulseSource;
 
     private Rigidbody2D _rb;
     private List<GravityObject> _nearbyObjects = new();
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
         _inputActions = new PlayerInputActions();
         _moveAction = _inputActions.Gameplay.Move;
         _gravityAction = _inputActions.Gameplay.EnableGravity;
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     private void OnEnable()
@@ -66,7 +70,11 @@ public class PlayerController : MonoBehaviour
     {
         if (_isThrusterActive)
         {
-            if (!_thrusterParticles.isPlaying) _thrusterParticles.Play();
+            if (!_thrusterParticles.isPlaying)
+            {
+                _thrusterParticles.Play();
+                _impulseSource.GenerateImpulse();
+            }
         }
         else
         {

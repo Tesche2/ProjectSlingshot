@@ -1012,6 +1012,7 @@ GameObject:
   - component: {fileID: 1664453582}
   - component: {fileID: 1664453581}
   - component: {fileID: 1664453580}
+  - component: {fileID: 1664453584}
   - component: {fileID: 1664453583}
   m_Layer: 0
   m_Name: VCam
@@ -1157,6 +1158,30 @@ MonoBehaviour:
   playerRb: {fileID: 1506488999}
   zoomInSpeed: 0.5
   zoomOutSpeed: 5
+--- !u!114 &1664453584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664453579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 0.2
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &2090473968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1165,6 +1190,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1689504481992946027, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
+      propertyPath: ImpulseDefinition.ImpulseType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689504481992946027, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
+      propertyPath: ImpulseDefinition.ImpulseShape
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3450465292131510028, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
       propertyPath: pullForce
       value: 50
