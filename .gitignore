@@ -12,7 +12,11 @@
 /[Uu]ser[Ss]ettings/
 /[Aa]ssets/Space_Exploration_GUI_Kit/
 /[Aa]ssets/_[Rr]ecovery/
+/ProjectSlingshot_BackUpThisFolder_ButDontShipItWithYourGame/
+/ProjectSlingshot_BurstDebugInformation_DoNotShip/
+/Slingshot_BurstDebugInformation_DoNotShip/
 *.log
+*.apk
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
