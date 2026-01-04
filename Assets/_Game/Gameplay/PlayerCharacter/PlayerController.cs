@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rb;
     private List<GravityObject> _nearbyObjects = new();
+    public bool isGravityActive = false;
 
     private void Awake()
     {
@@ -60,10 +61,15 @@ public class PlayerController : MonoBehaviour
             _isThrusterActive = false;
         }
 
-        if (_gravityAction.IsPressed())
+        if (_gravityAction.WasPressedThisFrame())
         {
-            _rb.AddForce(CalculateGravityInfluence());
+            isGravityActive = true;
         }
+        if (_gravityAction.WasReleasedThisFrame())
+        {
+            isGravityActive = false;
+        }
+
     }
 
     private void Update()
@@ -126,39 +132,25 @@ public class PlayerController : MonoBehaviour
      */
     private Vector2 CalculateGravityInfluence()
     {
-        Vector2 totalForce = Vector2.zero ;
-        Vector2 myPos = transform.position;
+        //Vector2 totalForce = Vector2.zero ;
+        //Vector2 myPos = transform.position;
 
-        foreach (var obj in _nearbyObjects)
-        {
-            Vector2 heading = obj.GetPosition() - myPos;
-            float sqrDist = heading.sqrMagnitude;
+        //foreach (var obj in _nearbyObjects)
+        //{
+        //    Vector2 heading = obj.GetPosition() - myPos;
+        //    float sqrDist = heading.sqrMagnitude;
 
-            if (sqrDist < 0.001f) continue;
+        //    if (sqrDist < 0.001f) continue;
     
-            totalForce += obj.gravityForce * heading.normalized / sqrDist;
-        }
+        //    totalForce += obj._gravityForce * heading.normalized / sqrDist;
+        //}
 
-        return totalForce;
+        return Vector2.zero;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    public void ApplyGravityForce(Vector2 force)
     {
-        if (col.TryGetComponent<GravityObject>(out var gravityObj))
-        {
-            if (!_nearbyObjects.Contains(gravityObj))
-            {
-                _nearbyObjects.Add(gravityObj);
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.TryGetComponent<GravityObject>(out var gravityObj))
-        {
-            _nearbyObjects.Remove(gravityObj);
-        }
+        _rb.AddForce(force);
     }
 
     public float getSpeed()
