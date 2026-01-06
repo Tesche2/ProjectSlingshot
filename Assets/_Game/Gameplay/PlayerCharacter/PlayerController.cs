@@ -15,14 +15,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem _thrusterParticles;
 
     private PlayerInputActions _inputActions;
-    private InputAction _moveAction;
-    private InputAction _gravityAction;
     private Vector2 _currentInputVector;
     private bool _isThrusterActive;
     private CinemachineImpulseSource _impulseSource;
-
     private Rigidbody2D _rb;
-    private List<GravityObject> _nearbyObjects = new();
+
     public bool isGravityActive = false;
 
     private void Awake()
@@ -30,22 +27,33 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _thrusterParticles.Stop(true);
         _inputActions = new PlayerInputActions();
-        _moveAction = _inputActions.Gameplay.Move;
-        _gravityAction = _inputActions.Gameplay.EnableGravity;
         _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     private void OnEnable()
     {
-        _inputActions.Gameplay.Enable();
+        PlayerInputActions.GameplayActions inputActions = _inputActions.Gameplay;
 
-        _inputActions.Gameplay.Move.performed += ctx => _currentInputVector = ctx.ReadValue<Vector2>();
-        _inputActions.Gameplay.Move.canceled += ctx => _currentInputVector = Vector2.zero;
+        inputActions.Move.performed += ctx => _currentInputVector = ctx.ReadValue<Vector2>();
+        inputActions.Move.canceled += ctx => _currentInputVector = Vector2.zero;
+
+        inputActions.EnableGravity.performed += _ => isGravityActive = true;
+        inputActions.EnableGravity.canceled += _ => isGravityActive = false;
+        
+        inputActions.Enable();
     }
 
     private void OnDisable()
     {
-        _inputActions.Gameplay.Disable();
+        PlayerInputActions.GameplayActions inputActions = _inputActions.Gameplay;
+
+        inputActions.Move.performed -= ctx => _currentInputVector = ctx.ReadValue<Vector2>();
+        inputActions.Move.canceled -= ctx => _currentInputVector = Vector2.zero;
+
+        inputActions.EnableGravity.performed -= _ => isGravityActive = true;
+        inputActions.EnableGravity.canceled -= _ => isGravityActive = false;
+        
+        inputActions.Disable();
     }    
 
     public void FixedUpdate()
@@ -60,16 +68,6 @@ public class PlayerController : MonoBehaviour
         {
             _isThrusterActive = false;
         }
-
-        if (_gravityAction.WasPressedThisFrame())
-        {
-            isGravityActive = true;
-        }
-        if (_gravityAction.WasReleasedThisFrame())
-        {
-            isGravityActive = false;
-        }
-
     }
 
     private void Update()
@@ -125,29 +123,6 @@ public class PlayerController : MonoBehaviour
         float damping = ((aV >= 0 && aD <= 0) || (aV <= 0 && aD >=0)) ? 0.15f : 1f;
         _rb.AddTorque(angularDistance * _torqueCoefficient / damping);
     }
-
-    /**
-     *  Calculates the influence of nearby bodies stored in "nearbyObjects[]" using the inverse
-     *  of the distance squared
-     */
-    private Vector2 CalculateGravityInfluence()
-    {
-        //Vector2 totalForce = Vector2.zero ;
-        //Vector2 myPos = transform.position;
-
-        //foreach (var obj in _nearbyObjects)
-        //{
-        //    Vector2 heading = obj.GetPosition() - myPos;
-        //    float sqrDist = heading.sqrMagnitude;
-
-        //    if (sqrDist < 0.001f) continue;
-    
-        //    totalForce += obj._gravityForce * heading.normalized / sqrDist;
-        //}
-
-        return Vector2.zero;
-    }
-
     public void ApplyGravityForce(Vector2 force)
     {
         _rb.AddForce(force);
