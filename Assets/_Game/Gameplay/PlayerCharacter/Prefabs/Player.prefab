@@ -24217,6 +24217,7 @@ GameObject:
   - component: {fileID: 867402743610690549}
   - component: {fileID: 3702799029814144056}
   - component: {fileID: 3450465292131510028}
+  - component: {fileID: 2277329188879425752}
   - component: {fileID: 1689504481992946027}
   m_Layer: 0
   m_Name: Player
@@ -24375,12 +24376,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab49ab458d9e7b408ac172f7b16a8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  _thrusterForce: 5
-  _maxThrusterSpeed: 10
-  _sidewaysCoefficient: 0.1
-  _backwardsCoefficient: 0.2
-  _torqueCoefficient: 0.05
-  _thrusterParticles: {fileID: 378532445632119026}
+  thrusterForce: 5
+  sidewaysCoefficient: 0.1
+  backwardsCoefficient: 0.2
+  torqueCoefficient: 0.001
+  isGravityActive: 0
+--- !u!114 &2277329188879425752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7574299396874114134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67efeb8cdcdb7604fb3acb9405834b74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEffects
+  torqueCoefficient: 0.001
+  controller: {fileID: 3450465292131510028}
+  thrusterParticles: {fileID: 378532445632119026}
+  impulseSource: {fileID: 1689504481992946027}
 --- !u!114 &1689504481992946027
 MonoBehaviour:
   m_ObjectHideFlags: 0
