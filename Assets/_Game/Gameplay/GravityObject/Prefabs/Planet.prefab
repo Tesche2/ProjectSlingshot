@@ -286,6 +286,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   segments: 50
+  baseWidth: 0.1
+  baseRotationSpeed: 10
+  baseDashLength: 1.5
+  _numberOfDashes: 0
+  _visualDashLength: 0
 --- !u!120 &92694962757545529
 LineRenderer:
   serializedVersion: 3
@@ -406,8 +411,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.94716984, g: 0.36278385, b: 0.79317397, a: 0.19607843}
+      key1: {r: 0.94716984, g: 0.36278385, b: 0.79317397, a: 0.19607843}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -431,7 +436,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

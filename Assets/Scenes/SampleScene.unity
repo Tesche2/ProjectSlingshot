@@ -577,7 +577,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.45, y: 9.66, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1493,8 +1493,56 @@ LineRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0.5, y: 0, z: 0}
+  - {x: 0.49605736, y: 0.06266661, z: 0}
+  - {x: 0.48429158, y: 0.12434494, z: 0}
+  - {x: 0.46488824, y: 0.18406226, z: 0}
+  - {x: 0.43815336, y: 0.24087682, z: 0}
+  - {x: 0.4045085, y: 0.29389262, z: 0}
+  - {x: 0.36448434, y: 0.34227353, z: 0}
+  - {x: 0.31871203, y: 0.3852566, z: 0}
+  - {x: 0.26791343, y: 0.42216393, z: 0}
+  - {x: 0.21288966, y: 0.45241353, z: 0}
+  - {x: 0.15450853, y: 0.47552824, z: 0}
+  - {x: 0.09369067, y: 0.4911436, z: 0}
+  - {x: 0.03139531, y: 0.49901336, z: 0}
+  - {x: -0.031395234, y: 0.49901336, z: 0}
+  - {x: -0.0936906, y: 0.49114364, z: 0}
+  - {x: -0.15450847, y: 0.47552827, z: 0}
+  - {x: -0.21288958, y: 0.45241356, z: 0}
+  - {x: -0.26791337, y: 0.422164, z: 0}
+  - {x: -0.318712, y: 0.38525662, z: 0}
+  - {x: -0.3644843, y: 0.34227353, z: 0}
+  - {x: -0.40450844, y: 0.29389268, z: 0}
+  - {x: -0.43815333, y: 0.24087688, z: 0}
+  - {x: -0.46488824, y: 0.1840623, z: 0}
+  - {x: -0.48429158, y: 0.12434495, z: 0}
+  - {x: -0.49605733, y: 0.062666714, z: 0}
+  - {x: -0.5, y: 0.0000000754979, z: 0}
+  - {x: -0.49605736, y: -0.062666565, z: 0}
+  - {x: -0.48429158, y: -0.12434492, z: 0}
+  - {x: -0.46488827, y: -0.18406217, z: 0}
+  - {x: -0.4381534, y: -0.24087675, z: 0}
+  - {x: -0.40450853, y: -0.29389256, z: 0}
+  - {x: -0.36448434, y: -0.34227353, z: 0}
+  - {x: -0.3187121, y: -0.38525653, z: 0}
+  - {x: -0.2679135, y: -0.4221639, z: 0}
+  - {x: -0.21288972, y: -0.4524135, z: 0}
+  - {x: -0.15450855, y: -0.47552824, z: 0}
+  - {x: -0.093690686, y: -0.4911436, z: 0}
+  - {x: -0.031395268, y: -0.49901336, z: 0}
+  - {x: 0.03139528, y: -0.49901336, z: 0}
+  - {x: 0.09369047, y: -0.49114367, z: 0}
+  - {x: 0.15450834, y: -0.4755283, z: 0}
+  - {x: 0.21288952, y: -0.4524136, z: 0}
+  - {x: 0.2679133, y: -0.42216402, z: 0}
+  - {x: 0.31871194, y: -0.38525668, z: 0}
+  - {x: 0.36448428, y: -0.3422736, z: 0}
+  - {x: 0.40450847, y: -0.29389265, z: 0}
+  - {x: 0.43815333, y: -0.24087685, z: 0}
+  - {x: 0.46488824, y: -0.18406227, z: 0}
+  - {x: 0.48429152, y: -0.12434514, z: 0}
+  - {x: 0.49605733, y: -0.06266679, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1515,8 +1563,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.94716984, g: 0.36278385, b: 0.79317397, a: 0.19607843}
+      key1: {r: 0.94716984, g: 0.36278385, b: 0.79317397, a: 0.19607843}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1540,7 +1588,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -1931,7 +1979,7 @@ Transform:
   m_GameObject: {fileID: 1664453579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.45, y: 9.66, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2445,11 +2493,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4501869668936942253, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4501869668936942253, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4501869668936942253, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
       propertyPath: m_LocalPosition.z
