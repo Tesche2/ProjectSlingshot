@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(LineRenderer))]
 public class OutlineRenderer : MonoBehaviour
@@ -7,10 +6,15 @@ public class OutlineRenderer : MonoBehaviour
     [SerializeField] private int segments = 20;
     [SerializeField] private float baseWidth = 0.1f;
     [SerializeField] private float baseRotationSpeed = 10f;
+    [SerializeField] private float baseDashLength = 1.5f;
 
     private LineRenderer _lineRenderer;
     private Camera _cam;
-    private float baseOrtographicSize;
+    private float _baseOrtographicSize;
+    private int _numberOfDashes;
+    private float _baseCircumference;
+    private float _visualCircumference;
+    private GameObject _player;
 
     private void Awake()
     {
@@ -19,15 +23,25 @@ public class OutlineRenderer : MonoBehaviour
         _lineRenderer.loop = true;
 
         _cam = Camera.main;
-        baseOrtographicSize = _cam.orthographicSize;
+        _baseOrtographicSize = _cam.orthographicSize;
+
+        _player = FindFirstObjectByType<PlayerController>().gameObject;
+
+        _baseCircumference = Mathf.PI * transform.localScale.x * transform.parent.localScale.x;
 
         DrawCircle();
     }
 
     private void Update()
     {
-        _lineRenderer.startWidth = baseWidth * _cam.orthographicSize / baseOrtographicSize;
-        gameObject.transform.Rotate(new Vector3(0, 0, baseRotationSpeed * Time.deltaTime));
+        _lineRenderer.startWidth = baseWidth * _cam.orthographicSize / _baseOrtographicSize;
+
+        Vector3 directionToPlayer = _player.transform.position - transform.position;
+        transform.right = directionToPlayer;
+
+        _visualCircumference = _baseCircumference * _baseOrtographicSize / _cam.orthographicSize;
+        _numberOfDashes = Mathf.Max(3, (int) (_visualCircumference / baseDashLength));
+        _lineRenderer.textureScale = new Vector2(_numberOfDashes / _baseCircumference, 0);
     }
 
     private void DrawCircle()
