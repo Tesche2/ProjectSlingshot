@@ -17,6 +17,15 @@ public class LevelSelectorRegion : MonoBehaviour
     private RectTransform _rectTransform;
     private GridLayoutGroup _gridLayoutGroup;
 
+    private void OnEnable()
+    {
+        if (_rectTransform == null) _rectTransform = GetComponent<RectTransform>();
+        if (_gridLayoutGroup == null) _gridLayoutGroup = GetComponent<GridLayoutGroup>();
+
+        _gridLayoutGroup.cellSize = Vector2.zero;
+        PlaceButtons();
+    }
+
     private void OnRectTransformDimensionsChange()
     {
         if (_rectTransform == null) _rectTransform = GetComponent<RectTransform>();
