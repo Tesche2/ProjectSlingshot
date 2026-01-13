@@ -121,4 +121,21 @@ public class PlayerController : MonoBehaviour
     {
         return _rb.linearVelocity.magnitude;
     }
+
+    public void ResetPhysics()
+    {
+        _rb.linearVelocity = Vector2.zero;
+        _rb.angularVelocity = 0f;
+
+        _currentInputVector = Vector2.zero;
+        isGravityActive = false;
+    }
+
+    public void SetInputActive(bool active)
+    {
+        if (active)
+            _inputActions.Gameplay.Enable();
+        else
+            _inputActions.Gameplay.Disable();
+    }
 }

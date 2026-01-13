@@ -35,7 +35,7 @@ public class PlayerEffects : MonoBehaviour
         impulseSource.GenerateImpulse();
     }
 
-    private void StopThrusterEffects()
+    public void StopThrusterEffects()
     {
         thrusterParticles.Stop(true);
     }

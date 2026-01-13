@@ -102,6 +102,12 @@ public class LevelSelectorRegion : MonoBehaviour
         {
             GameObject button = Instantiate(buttonPrefab, transform);
             button.GetComponentInChildren<TextMeshProUGUI>().text = (i+1).ToString();
+
+            Button btnComponent = button.GetComponent<Button>();
+            btnComponent.onClick.AddListener(() =>
+            {
+                SceneLoader.Instance.LoadScene("Level_1");
+            });
         }
     }
 }
