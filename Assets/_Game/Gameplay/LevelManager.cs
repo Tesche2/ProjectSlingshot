@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
+public enum LevelState { Overview, Countdown, Gameplay, LevelMenu, Finished }
 
 public class LevelManager : MonoBehaviour
 {
     private readonly static WaitForSeconds _waitForSeconds1 = new(1);
     public static LevelManager Instance;
 
-    public enum LevelState { Overview, Countdown, Gameplay, LevelMenu, Finished }
     public LevelState currentState {  get; private set; }
 
     [Header("References")]
@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     public System.Action OnCountdownStart;
     public System.Action OnGameplayStart;
     public System.Action OnMenuStart;
+    public System.Action<string> OnCountdownMessage;
 
     private void Awake()
     {
@@ -28,7 +29,21 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         _spawnPoint = player.transform;
+
+        if (GlobalInputManager.Instance != null)
+        {
+            GlobalInputManager.Instance.RegisterLevelEvents(this);
+        }
+
         EnterState(LevelState.Overview);
+    }
+
+    private void OnDestroy()
+    {
+        if (GlobalInputManager.Instance != null)
+        {
+            GlobalInputManager.Instance.UnregisterLevelEvents(this);
+        }
     }
 
     public void EnterState(LevelState newState)
@@ -38,35 +53,28 @@ public class LevelManager : MonoBehaviour
         switch (newState)
         {
             case LevelState.Overview:
-                player.SetInputActive(false);
                 OnOverviewStart.Invoke();
-
                 break;
 
             case LevelState.Countdown:
                 ResetPlayer();
-                player.SetInputActive(false);
                 OnCountdownStart.Invoke();
                 StartCoroutine(CountdownRoutine());
-
                 break;
 
             case LevelState.Gameplay:
-                player.SetInputActive(true);
                 OnGameplayStart.Invoke();
-
                 break;
 
             case LevelState.LevelMenu:
-                player.SetInputActive(false);
                 OnMenuStart.Invoke();
-
                 break;
         }
     }
 
     public void InstantRestart()
     {
+        // Stops countdown coroutine if it's already running
         StopAllCoroutines();
         EnterState(LevelState.Countdown);
     }
@@ -81,13 +89,12 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator CountdownRoutine()
     {
-        Debug.Log("3...");
+        OnCountdownMessage?.Invoke("3");
         yield return _waitForSeconds1;
-        Debug.Log("2...");
+        OnCountdownMessage?.Invoke("2");
         yield return _waitForSeconds1;
-        Debug.Log("1...");
+        OnCountdownMessage?.Invoke("1");
         yield return _waitForSeconds1;
-        Debug.Log("GO!");
 
         EnterState(LevelState.Gameplay);
     }

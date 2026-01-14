@@ -20,35 +20,34 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _inputActions = new GameInput();
     }
 
     private void OnEnable()
     {
-        GameInput.GameplayActions inputActions = _inputActions.Gameplay;
+        GameInput.GameplayActions gameplayActions = GlobalInputManager.Instance.InputActions.Gameplay;
 
-        inputActions.Move.performed += ctx => _currentInputVector = ctx.ReadValue<Vector2>();
-        inputActions.Move.started += _ => HandleThrusterStarted();
-        inputActions.Move.canceled += _ => HandleThrusterCanceled();
+        gameplayActions.Move.performed += ctx => _currentInputVector = ctx.ReadValue<Vector2>();
+        gameplayActions.Move.started += _ => HandleThrusterStarted();
+        gameplayActions.Move.canceled += _ => HandleThrusterCanceled();
 
-        inputActions.EnableGravity.performed += _ => isGravityActive = true;
-        inputActions.EnableGravity.canceled += _ => isGravityActive = false;
-        
-        inputActions.Enable();
+        gameplayActions.EnableGravity.performed += _ => isGravityActive = true;
+        gameplayActions.EnableGravity.canceled += _ => isGravityActive = false;
+
+        gameplayActions.Enable();
     }
 
     private void OnDisable()
     {
-        GameInput.GameplayActions inputActions = _inputActions.Gameplay;
+        GameInput.GameplayActions gameplayActions = GlobalInputManager.Instance.InputActions.Gameplay;
 
-        inputActions.Move.performed -= ctx => _currentInputVector = ctx.ReadValue<Vector2>();
-        inputActions.Move.started -= _ => HandleThrusterStarted();
-        inputActions.Move.canceled -= _ => HandleThrusterCanceled();
+        gameplayActions.Move.performed -= ctx => _currentInputVector = ctx.ReadValue<Vector2>();
+        gameplayActions.Move.started -= _ => HandleThrusterStarted();
+        gameplayActions.Move.canceled -= _ => HandleThrusterCanceled();
 
-        inputActions.EnableGravity.performed -= _ => isGravityActive = true;
-        inputActions.EnableGravity.canceled -= _ => isGravityActive = false;
-        
-        inputActions.Disable();
+        gameplayActions.EnableGravity.performed -= _ => isGravityActive = true;
+        gameplayActions.EnableGravity.canceled -= _ => isGravityActive = false;
+
+        gameplayActions.Disable();
     }    
 
     public void FixedUpdate()

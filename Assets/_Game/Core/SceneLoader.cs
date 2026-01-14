@@ -11,6 +11,9 @@ public class SceneLoader : MonoBehaviour
 
     private string _activeScene;
 
+    public System.Action OnMenuLoad;
+    public System.Action OnLevelLoad;
+
     private void Awake()
     {
         if( Instance == null) Instance = this;
@@ -45,6 +48,15 @@ public class SceneLoader : MonoBehaviour
 
         Scene scene = SceneManager.GetSceneByName(newScene);
         SceneManager.SetActiveScene(scene);
+
+        if (newScene.StartsWith("Level_"))
+        {
+            OnLevelLoad?.Invoke();
+        }
+        else if (newScene == mainMenuSceneName)
+        {
+            OnMenuLoad?.Invoke();
+        }
 
         _activeScene = newScene;
     }
