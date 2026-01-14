@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "name": "PlayerInputActions",
+    "name": "GameInput",
     "maps": [
         {
             "name": "Gameplay",
@@ -111,6 +111,56 @@
                     "processors": "",
                     "groups": "",
                     "action": "EnableGravity",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "LevelOverview",
+            "id": "2cf81793-3391-40b0-a5cf-b0ea861bdb80",
+            "actions": [
+                {
+                    "name": "StartGame",
+                    "type": "Button",
+                    "id": "f137b5c1-6ca2-41d3-9053-dbfeecc8b7ba",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3ebf95be-333c-4772-ac4c-fb7b32076b94",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b7689a8-bce0-49f4-b495-c295746428bf",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52da6cb0-f53f-4b8f-a461-7df7b10c292c",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

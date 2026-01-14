@@ -5123,10 +5123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb9e043b4861184f88cfaece10569e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  segments: 50
-  baseWidth: 0.1
-  baseRotationSpeed: 10
-  baseDashLength: 1.5
+  config: {fileID: 11400000, guid: 585bc863532a1f14497644a1eaf017fe, type: 2}
 --- !u!114 &1412406802469041661
 MonoBehaviour:
   m_ObjectHideFlags: 0

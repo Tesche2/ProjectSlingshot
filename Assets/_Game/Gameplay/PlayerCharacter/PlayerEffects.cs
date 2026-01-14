@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerEffects : MonoBehaviour
 {
-    [SerializeField] private float torqueCoefficient = 0.001f;
-
     [Header("Dependencies")]
     [SerializeField] private PlayerController controller;
 
