@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     public event Action OnThrusterStart;
     public event Action OnThrusterStop;
 
-    private GameInput _inputActions;
     private Vector2 _currentInputVector;
     private Rigidbody2D _rb;
 
@@ -125,13 +124,5 @@ public class PlayerController : MonoBehaviour
 
         _currentInputVector = Vector2.zero;
         isGravityActive = false;
-    }
-
-    public void SetInputActive(bool active)
-    {
-        if (active)
-            _inputActions.Gameplay.Enable();
-        else
-            _inputActions.Gameplay.Disable();
     }
 }

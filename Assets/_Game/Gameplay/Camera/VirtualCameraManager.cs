@@ -3,26 +3,34 @@ using UnityEngine;
 
 public class VirtualCameraManager : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera OverviewCamera;
+    [SerializeField] private CinemachineCamera overviewCamera;
     [SerializeField] private CinemachineCamera followCamera;
 
     private void Awake()
     {
-        OverviewCamera.Prioritize();
+        ActivateOverview();
     }
 
     private void OnEnable()
     {
-        LevelManager.Instance.OnCountdownStart += PrioritizeFollowCamera;
+        LevelManager.Instance.OnZoomInStart += ActivateFollow;
     }
 
     private void OnDisable()
     {
-        LevelManager.Instance.OnCountdownStart -= PrioritizeFollowCamera;
+        LevelManager.Instance.OnZoomInStart -= ActivateFollow;
     }
 
-    private void PrioritizeFollowCamera()
+    private void ActivateOverview()
     {
-        followCamera.Prioritize();
+        overviewCamera.Priority = 1;
+        followCamera.Priority = 0;
+    }
+
+    private void ActivateFollow()
+    {
+        overviewCamera.Priority = 0;
+        followCamera.Priority = 1;
+        Debug.Log("Changing to Follow Camera");
     }
 }

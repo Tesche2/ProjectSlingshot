@@ -3,7 +3,6 @@ using UnityEngine;
 public class GlobalInputManager : MonoBehaviour
 {
     public static GlobalInputManager Instance;
-
     public GameInput InputActions { get; private set; }
 
     private void Awake()
@@ -21,60 +20,30 @@ public class GlobalInputManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        if (SceneLoader.Instance == null) {
-            Debug.LogWarning($"SCENE LOADER NULL");
-        }
-
-        SceneLoader.Instance.OnMenuLoad += EnableMenuControls;
-        SceneLoader.Instance.OnLevelLoad += EnableOverviewControls;
-    }
-
-    private void OnDisable()
-    {
-        SceneLoader.Instance.OnMenuLoad -= EnableMenuControls;
-        SceneLoader.Instance.OnLevelLoad -= EnableOverviewControls;
-    }
-
-    public void RegisterLevelEvents(LevelManager levelManager)
-    {
-        UnregisterLevelEvents(levelManager);
-
-        levelManager.OnOverviewStart += EnableOverviewControls;
-        levelManager.OnCountdownStart += DisableAllControls;
-        levelManager.OnGameplayStart += EnableGameplayControls;
-        levelManager.OnMenuStart += EnableMenuControls;
-    }
-
-    public void UnregisterLevelEvents(LevelManager levelManager)
-    {
-        levelManager.OnOverviewStart -= EnableOverviewControls;
-        levelManager.OnCountdownStart -= DisableAllControls;
-        levelManager.OnGameplayStart -= EnableGameplayControls;
-        levelManager.OnMenuStart -= EnableMenuControls;
-    }
-
-    private void EnableGameplayControls()
+    public void SetInputState_Gameplay()
     {
         InputActions.Disable();
         InputActions.Gameplay.Enable();
+        Debug.Log("GIM: Gameplay");
     }
 
-    private void EnableMenuControls()
+    public void SetInputState_Menu()
     {
         InputActions.Disable();
         InputActions.MenuNavigation.Enable();
+        Debug.Log("GIM: Menu");
     }
 
-    private void EnableOverviewControls()
+    public void SetInputState_Overview()
     {
         InputActions.Disable();
         InputActions.LevelOverview.Enable();
+        Debug.Log("GIM: Overview");
     }
 
-    private void DisableAllControls()
+    public void SetInputState_Blocked()
     {
         InputActions.Disable();
+        Debug.Log("GIM: Blocked");
     }
 }

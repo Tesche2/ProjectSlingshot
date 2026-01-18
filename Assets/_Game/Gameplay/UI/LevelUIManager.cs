@@ -14,11 +14,14 @@ public class LevelUIManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+            DisableAllUI();
     }
 
     private void OnEnable()
     {
         LevelManager.Instance.OnOverviewStart += EnableOverviewMessage;
+        LevelManager.Instance.OnZoomInStart += DisableAllUI;
         LevelManager.Instance.OnCountdownStart += EnableCountdown;
         LevelManager.Instance.OnGameplayStart += GameStarted;
         LevelManager.Instance.OnMenuStart += EnableGameMenu;
@@ -30,6 +33,7 @@ public class LevelUIManager : MonoBehaviour
     private void OnDisable()
     {
         LevelManager.Instance.OnOverviewStart -= EnableOverviewMessage;
+        LevelManager.Instance.OnZoomInStart -= DisableAllUI;
         LevelManager.Instance.OnCountdownStart -= EnableCountdown;
         LevelManager.Instance.OnGameplayStart -= GameStarted;
         LevelManager.Instance.OnMenuStart -= EnableGameMenu;
@@ -58,12 +62,16 @@ public class LevelUIManager : MonoBehaviour
         DisableAllUI();
         CheckForTouchOverlay();
 
+        Debug.Log("Display Countdown");
+
         Countdown.SetActive(true);
     }
 
     private void EnableOverviewMessage()
     {
         DisableAllUI();
+
+        Debug.Log("Display Overview");
 
         DefineOverviewMessage(InputDeviceMonitor.Instance.currentDevice);
         OverviewMessage.SetActive(true);

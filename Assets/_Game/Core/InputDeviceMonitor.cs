@@ -43,17 +43,17 @@ public class InputDeviceMonitor : MonoBehaviour
         // Define input type
         DeviceType detectedDevice = currentDevice;
 
-        if(device is Gamepad)
+        if (device is Touchscreen)
+        {
+            detectedDevice = DeviceType.Touch;
+        }
+        else if(device is Gamepad)
         {
             detectedDevice = DeviceType.Gamepad;
         }
-        else if (device is Keyboard || device is Mouse)
+        else if ((device is Keyboard || device is Mouse))
         {
             detectedDevice = DeviceType.KeyboardMouse;
-        }
-        else if (device is Touchscreen)
-        {
-            detectedDevice = DeviceType.Touch;
         }
 
         // Emit event if device changed

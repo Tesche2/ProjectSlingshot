@@ -1,6 +1,7 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
-public enum LevelState { Overview, Countdown, Gameplay, LevelMenu, Finished }
+public enum LevelState { Overview, ZoomingIn, Countdown, Gameplay, LevelMenu, Finished }
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private PlayerEffects playerEffects;
     
-    private Transform _spawnPoint;
+    private Vector3 _spawnPosition;
+    private float _ZoomInTime;
 
     public System.Action OnOverviewStart;
+    public System.Action OnZoomInStart;
     public System.Action OnCountdownStart;
     public System.Action OnGameplayStart;
     public System.Action OnMenuStart;
@@ -24,26 +27,26 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        Camera cam = Camera.main;
+        _ZoomInTime = cam.GetComponent<CinemachineBrain>().DefaultBlend.Time;
     }
 
     private void Start()
     {
-        _spawnPoint = player.transform;
-
-        if (GlobalInputManager.Instance != null)
+        if (player == null)
         {
-            GlobalInputManager.Instance.RegisterLevelEvents(this);
+            Debug.LogWarning("Player NULL");
         }
-
+        _spawnPosition = player.transform.position;
         EnterState(LevelState.Overview);
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        if (GlobalInputManager.Instance != null)
-        {
-            GlobalInputManager.Instance.UnregisterLevelEvents(this);
-        }
+        GameInput.LevelOverviewActions overviewActions = GlobalInputManager.Instance.InputActions.LevelOverview;
+        overviewActions.StartGame.performed += _ => EnterState(LevelState.ZoomingIn);
     }
 
     public void EnterState(LevelState newState)
@@ -53,21 +56,30 @@ public class LevelManager : MonoBehaviour
         switch (newState)
         {
             case LevelState.Overview:
-                OnOverviewStart.Invoke();
+                GlobalInputManager.Instance.SetInputState_Overview();
+                OnOverviewStart?.Invoke();
+                break;
+
+            case LevelState.ZoomingIn:
+                GlobalInputManager.Instance.SetInputState_Blocked();
+                OnZoomInStart?.Invoke();
+                StartCoroutine(ZoomInRoutine());
                 break;
 
             case LevelState.Countdown:
-                ResetPlayer();
-                OnCountdownStart.Invoke();
+                GlobalInputManager.Instance.SetInputState_Blocked();
+                OnCountdownStart?.Invoke();
                 StartCoroutine(CountdownRoutine());
                 break;
 
             case LevelState.Gameplay:
-                OnGameplayStart.Invoke();
+                GlobalInputManager.Instance.SetInputState_Gameplay();
+                OnGameplayStart?.Invoke();
                 break;
 
             case LevelState.LevelMenu:
-                OnMenuStart.Invoke();
+                GlobalInputManager.Instance.SetInputState_Menu();
+                OnMenuStart?.Invoke();
                 break;
         }
     }
@@ -76,15 +88,24 @@ public class LevelManager : MonoBehaviour
     {
         // Stops countdown coroutine if it's already running
         StopAllCoroutines();
+        ResetPlayer();
         EnterState(LevelState.Countdown);
     }
 
     private void ResetPlayer()
     {
-        player.transform.position = _spawnPoint.position;
-        player.transform.rotation = _spawnPoint.rotation;
+        player.transform.position = _spawnPosition;
+        player.transform.rotation = Quaternion.identity;
         player.ResetPhysics();
         playerEffects.StopThrusterEffects();
+    }
+
+    private IEnumerator ZoomInRoutine()
+    {
+        WaitForSeconds wait = new(_ZoomInTime);
+        yield return wait;
+
+        EnterState(LevelState.Countdown);
     }
 
     private IEnumerator CountdownRoutine()

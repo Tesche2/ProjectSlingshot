@@ -198,6 +198,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""732089ce-cdd3-4d0a-875d-9cc18c3df968"",
+                    ""path"": ""<AndroidJoystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b168bf3f-9746-44d0-8eb5-04f14638db77"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -211,6 +222,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""42e21416-9803-4279-8dda-f46dc045b961"",
                     ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnableGravity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f20c43c6-2fcc-4e73-89ad-285169ab89fa"",
+                    ""path"": ""<Joystick>/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -20,7 +20,7 @@ public class OutlineRenderer : MonoBehaviour
         _lineRenderer.loop = true;
 
         _cam = Camera.main;
-        _baseOrtographicSize = _cam.orthographicSize;
+        _baseOrtographicSize = 5;
 
         _player = FindFirstObjectByType<PlayerController>().gameObject;
 

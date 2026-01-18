@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c015feb1dd9774789be39fe7784d67, type: 3}
   m_Name: CameraConfig
   m_EditorClassIdentifier: Assembly-CSharp::CameraConfig
-  oscillationFrequency: 0.75
+  oscillationFrequency: 0.5
   zoomCurve:
     serializedVersion: 2
     m_Curve:

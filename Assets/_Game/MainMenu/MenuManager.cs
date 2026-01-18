@@ -5,6 +5,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private Canvas canvas;
 
+    private void Awake()
+    {
+        GlobalInputManager.Instance.SetInputState_Menu();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
