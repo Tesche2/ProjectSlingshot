@@ -8,14 +8,16 @@ public class LevelManager : MonoBehaviour
     private readonly static WaitForSeconds _waitForSeconds1 = new(1);
     public static LevelManager Instance;
 
-    public LevelState currentState {  get; private set; }
+    public LevelState currentState { get; private set; }
 
     [Header("References")]
     [SerializeField] private PlayerController player;
     [SerializeField] private PlayerEffects playerEffects;
-    
+    [SerializeField] private FinishLine finishLine;
+
     private Vector3 _spawnPosition;
     private float _ZoomInTime;
+    private float _lineRatio;
 
     public System.Action OnOverviewStart;
     public System.Action OnZoomInStart;
@@ -23,6 +25,8 @@ public class LevelManager : MonoBehaviour
     public System.Action OnGameplayStart;
     public System.Action OnMenuStart;
     public System.Action<string> OnCountdownMessage;
+
+    public float timeValue {  get; private set; }
 
     private void Awake()
     {
@@ -41,12 +45,16 @@ public class LevelManager : MonoBehaviour
         }
         _spawnPosition = player.transform.position;
         EnterState(LevelState.Overview);
+
+        timeValue = 0f;
     }
 
     private void OnEnable()
     {
         GameInput.LevelOverviewActions overviewActions = GlobalInputManager.Instance.InputActions.LevelOverview;
         overviewActions.StartGame.performed += _ => EnterState(LevelState.ZoomingIn);
+
+        finishLine.OnFinishLineCrossed += EndGame;
     }
 
     public void EnterState(LevelState newState)
@@ -75,6 +83,7 @@ public class LevelManager : MonoBehaviour
             case LevelState.Gameplay:
                 GlobalInputManager.Instance.SetInputState_Gameplay();
                 OnGameplayStart?.Invoke();
+                StartCoroutine(TimerRoutine());
                 break;
 
             case LevelState.LevelMenu:
@@ -89,6 +98,7 @@ public class LevelManager : MonoBehaviour
         // Stops countdown coroutine if it's already running
         StopAllCoroutines();
         ResetPlayer();
+        timeValue = 0f;
         EnterState(LevelState.Countdown);
     }
 
@@ -98,6 +108,12 @@ public class LevelManager : MonoBehaviour
         player.transform.rotation = Quaternion.identity;
         player.ResetPhysics();
         playerEffects.StopThrusterEffects();
+    }
+
+    private void EndGame(float lineRatio)
+    {
+        _lineRatio = lineRatio;
+        EnterState(LevelState.Finished);
     }
 
     private IEnumerator ZoomInRoutine()
@@ -118,5 +134,19 @@ public class LevelManager : MonoBehaviour
         yield return _waitForSeconds1;
 
         EnterState(LevelState.Gameplay);
+    }
+
+    public IEnumerator TimerRoutine()
+    {
+        while(currentState != LevelState.Finished)
+        {
+            timeValue += Time.deltaTime;
+
+            yield return timeValue;
+        }
+
+        timeValue += Time.deltaTime * _lineRatio;
+
+        Debug.Log(timeValue);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public class LevelUIManager : MonoBehaviour
     [SerializeField] GameObject GameMenu;
     [SerializeField] GameObject OverviewMessage;
     [SerializeField] GameObject Countdown;
+    [SerializeField] GameObject Timer;
+
+    TextMeshProUGUI _timerTMP;
 
     private void Awake()
     {
@@ -16,6 +20,8 @@ public class LevelUIManager : MonoBehaviour
         else Destroy(gameObject);
 
             DisableAllUI();
+
+        _timerTMP = Timer.GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -42,12 +48,25 @@ public class LevelUIManager : MonoBehaviour
         InputDeviceMonitor.Instance.OnDeviceChanged -= InputDeviceChanged;
     }
 
+    private void Update()
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(LevelManager.Instance.timeValue);
+
+        string formattedTime = timeSpan.ToString(@"mm\:ss\.fff");
+
+        _timerTMP.text = formattedTime;
+    }
+
     private void InputDeviceChanged(DeviceType device)
     {
         DefineOverviewMessage(device);
 
         LevelState state = LevelManager.Instance.currentState;
-        if (device == DeviceType.Touch && (state == LevelState.Countdown || state == LevelState.Gameplay)) MobileControls.SetActive(true);
+
+        bool isTouch = device == DeviceType.Touch;
+        bool isGameRunning = state == LevelState.Countdown || state == LevelState.Gameplay || state == LevelState.Finished;
+
+        if (isTouch && isGameRunning) MobileControls.SetActive(true);
         else MobileControls.SetActive(false);
     }
 
@@ -55,6 +74,8 @@ public class LevelUIManager : MonoBehaviour
     {
         DisableAllUI();
         CheckForTouchOverlay();
+
+        Timer.SetActive(true);
     }
 
     private void EnableCountdown()
@@ -64,6 +85,7 @@ public class LevelUIManager : MonoBehaviour
 
         Debug.Log("Display Countdown");
 
+        Timer.SetActive(true);
         Countdown.SetActive(true);
     }
 
@@ -122,5 +144,6 @@ public class LevelUIManager : MonoBehaviour
         OverviewMessage.SetActive(false);
         Countdown.SetActive(false);
         GameMenu.SetActive(false);
+        Timer.SetActive(false);
     }
 }

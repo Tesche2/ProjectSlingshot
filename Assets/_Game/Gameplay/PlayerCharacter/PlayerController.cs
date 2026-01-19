@@ -10,9 +10,11 @@ public class PlayerController : MonoBehaviour
 
     public event Action OnThrusterStart;
     public event Action OnThrusterStop;
+    public event Action<Vector3, Vector3> OnFinishLineCross;
 
     private Vector2 _currentInputVector;
     private Rigidbody2D _rb;
+    public Vector3 PreviousFramePos { get; private set; }
 
     [HideInInspector] public bool isGravityActive = false;
 
@@ -59,6 +61,8 @@ public class PlayerController : MonoBehaviour
         {
             RotatePlayer(_rb.linearVelocity);
         }
+
+        PreviousFramePos = transform.position;
     }
 
     private void MovePlayer(Vector2 direction)
