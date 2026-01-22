@@ -1,11 +1,33 @@
 using System;
+using Unity.Cinemachine;
 using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-struct VectorLine 
+class VectorLine 
 {
-    public Vector2 start;
-    public Vector2 end;
+    public Vector2 Start { get; private set; }
+    public Vector2 End { get; private set; }
+
+    public VectorLine(Vector2 start, Vector2 end)
+    {
+        Start = start; End = end; 
+    }
+
+    public float Length()
+    {
+        return Vector2.Distance(Start, End);
+    }
+
+    public Vector2 FindIntersectionWith (VectorLine other)
+    {
+        return VectorUtils.IntersectLineSegments(Start, End, other.Start, other.End);
+    }
+
+    public void DrawLine(Color color)
+    {
+        Debug.DrawLine(Start, End, color, 100000000);
+    }
 }
 
 public class FinishLine : MonoBehaviour
@@ -13,7 +35,7 @@ public class FinishLine : MonoBehaviour
     private BoxCollider2D _finishLineCollider;
     private CircleCollider2D _playerCollider;
 
-    private VectorLine _bottomEdge;
+    private VectorLine[] _edges;
 
     public event Action<float> OnFinishLineCrossed;
 
@@ -22,15 +44,23 @@ public class FinishLine : MonoBehaviour
         _finishLineCollider = GetComponent<BoxCollider2D>();
 
         Vector2 localExtents = _finishLineCollider.bounds.size / 2f;
-        Vector3 localBottomLeft = _finishLineCollider.bounds.center + new Vector3(-localExtents.x, -localExtents.y, 0);
-        Vector3 localBottomRight = _finishLineCollider.bounds.center + new Vector3(localExtents.x, -localExtents.y, 0);
+        Vector3 center = _finishLineCollider.bounds.center;
+        Vector3 localBottomLeft = center + new Vector3(-localExtents.x, -localExtents.y, 0);
+        Vector3 localBottomRight = center + new Vector3(localExtents.x, -localExtents.y, 0);
+        Vector3 localTopLeft = center + new Vector3(-localExtents.x, localExtents.y, 0);
+        Vector3 localTopRight = center + new Vector3(localExtents.x, localExtents.y, 0);
 
-        Debug.Log($"Center: {_finishLineCollider.bounds.center}");
-        Debug.Log($"left: {new Vector3(-localExtents.x, -localExtents.y, 0)}");
-        Debug.Log($"Right: {new Vector3(localExtents.x, -localExtents.y, 0)}");
+        VectorLine[] edgesArray = {
+            new(localBottomLeft, localBottomRight),
+            new(localBottomLeft, localTopLeft),
+            new(localBottomRight, localTopRight),
+            new(localTopLeft, localTopRight)
+        };
+        _edges = edgesArray;
 
-        _bottomEdge.start = localBottomLeft;
-        _bottomEdge.end = localBottomRight;
+        foreach (VectorLine edge in _edges) {
+            edge.DrawLine(Color.blue);
+        }
 
         LevelManager.Instance.OnGameplayStart += EnableCollider;
     }
@@ -43,6 +73,7 @@ public class FinishLine : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         _playerCollider = other.GetComponent<CircleCollider2D>();
+        HandleSubframeCalculation(other);
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -68,31 +99,49 @@ public class FinishLine : MonoBehaviour
 
     private void HandleSubframeCalculation(Collider2D other)
     {
-        if(PlayerCrossedLine(other))
+        PlayerController controller = other.GetComponent<PlayerController>();
+        if (controller == null) return;
+
+        // Find line for player trajectory
+        VectorLine playerTrajectory = new(controller.PreviousFramePos, controller.transform.position);
+        playerTrajectory.DrawLine(Color.red);
+
+        Vector2 intersectionPoint = Vector2.zero;
+        float shortestDistance = float.MaxValue;
+        bool hasIntersection = false;
+
+        foreach (VectorLine edge in _edges)
+        {
+            Vector2 crossPoint = playerTrajectory.FindIntersectionWith(edge);
+
+            if (!float.IsInfinity(crossPoint.x))
+            {
+                float dist = Vector2.Distance(playerTrajectory.Start, crossPoint);
+                if (dist < shortestDistance)
+                {
+                    shortestDistance = dist;
+                    intersectionPoint = crossPoint;
+                    hasIntersection = true;
+                }
+            }
+        }
+
+        if(hasIntersection)
         {
             _finishLineCollider.enabled = false;
 
-            PlayerController controller = other.GetComponent<PlayerController>();
+            DrawX(intersectionPoint, Color.green);
 
-            VectorLine playerTrajectory;
-            playerTrajectory.start = controller.PreviousFramePos;
-            playerTrajectory.end = controller.transform.position;
+            float totalLength = playerTrajectory.Length();
+            float linesRatio = totalLength > Mathf.Epsilon ? shortestDistance / totalLength : 1f;
 
-            Debug.DrawLine(_bottomEdge.start, _bottomEdge.end, Color.yellow);
-
-            Vector2 crossingPoint = VectorUtils.IntersectLines(
-                playerTrajectory.start,
-                playerTrajectory.end,
-                _bottomEdge.start,
-                _bottomEdge.end
-            );
-
-            VectorLine trajectoryToLine;
-            trajectoryToLine.start = playerTrajectory.start;
-            trajectoryToLine.end = crossingPoint;
-
-            float linesRatio = Vector2.Distance(trajectoryToLine.start, trajectoryToLine.end) / Vector2.Distance(playerTrajectory.start, playerTrajectory.end);
-            OnFinishLineCrossed.Invoke(linesRatio);
+            OnFinishLineCrossed?.Invoke(linesRatio);
         }
+    }
+
+    private void DrawX(Vector3 position, Color color)
+    {
+        Debug.DrawLine(new Vector3(position.x - .1f, position.y - .1f), new Vector3(position.x + .1f, position.y + .1f), color, 100000000);
+        Debug.DrawLine(new Vector3(position.x - .1f, position.y + .1f), new Vector3(position.x + .1f, position.y - .1f), color, 100000000);
     }
 }

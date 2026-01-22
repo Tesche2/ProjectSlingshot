@@ -128,5 +128,7 @@ public class PlayerController : MonoBehaviour
 
         _currentInputVector = Vector2.zero;
         isGravityActive = false;
+
+        PreviousFramePos = transform.position;
     }
 }

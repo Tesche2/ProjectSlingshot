@@ -2987,6 +2987,10 @@ PrefabInstance:
       propertyPath: torqueCoefficient
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 3702799029814144056, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4501869668936942253, guid: 67eb87b96247d734484ff9643b1b6ca0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 50.35

@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 
     private Vector3 _spawnPosition;
     private float _ZoomInTime;
-    private float _lineRatio;
+    private float _finalSubframeRatio;
 
     public System.Action OnOverviewStart;
     public System.Action OnZoomInStart;
@@ -47,6 +47,7 @@ public class LevelManager : MonoBehaviour
         EnterState(LevelState.Overview);
 
         timeValue = 0f;
+        _finalSubframeRatio = -1f;
     }
 
     private void OnEnable()
@@ -99,6 +100,7 @@ public class LevelManager : MonoBehaviour
         StopAllCoroutines();
         ResetPlayer();
         timeValue = 0f;
+        _finalSubframeRatio = -1f;
         EnterState(LevelState.Countdown);
     }
 
@@ -112,7 +114,7 @@ public class LevelManager : MonoBehaviour
 
     private void EndGame(float lineRatio)
     {
-        _lineRatio = lineRatio;
+        _finalSubframeRatio = lineRatio;
         EnterState(LevelState.Finished);
     }
 
@@ -138,15 +140,13 @@ public class LevelManager : MonoBehaviour
 
     public IEnumerator TimerRoutine()
     {
-        while(currentState != LevelState.Finished)
+        while(_finalSubframeRatio < 0)
         {
+            Debug.Log(_finalSubframeRatio);
             timeValue += Time.deltaTime;
-
             yield return timeValue;
         }
-
-        timeValue += Time.deltaTime * _lineRatio;
-
-        Debug.Log(timeValue);
+        Debug.Log(_finalSubframeRatio);
+        timeValue += Time.deltaTime * _finalSubframeRatio;
     }
 }

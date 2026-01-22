@@ -134,13 +134,15 @@ public class LevelUIManager : MonoBehaviour
 
     private void CheckForTouchOverlay()
     {
-        if (InputDeviceMonitor.Instance.currentDevice == DeviceType.Touch) MobileControls.SetActive(true);
+        if (InputDeviceMonitor.Instance.currentDevice == DeviceType.Touch)
+        {
+            if (!MobileControls.activeSelf) MobileControls.SetActive(true);
+        }
         else MobileControls.SetActive(false);
     }
 
     private void DisableAllUI()
     {
-        MobileControls.SetActive(false);
         OverviewMessage.SetActive(false);
         Countdown.SetActive(false);
         GameMenu.SetActive(false);
