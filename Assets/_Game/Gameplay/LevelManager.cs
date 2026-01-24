@@ -5,28 +5,26 @@ public enum LevelState { Overview, ZoomingIn, Countdown, Gameplay, LevelMenu, Fi
 
 public class LevelManager : MonoBehaviour
 {
-    private readonly static WaitForSeconds _waitForSeconds1 = new(1);
+    private readonly static WaitForSeconds _waitForSeconds3 = new(3);
     public static LevelManager Instance;
 
     public LevelState currentState { get; private set; }
 
     [Header("References")]
-    [SerializeField] private PlayerController player;
-    [SerializeField] private PlayerEffects playerEffects;
     [SerializeField] private FinishLine finishLine;
 
-    private Vector3 _spawnPosition;
     private float _ZoomInTime;
-    private float _finalSubframeRatio;
 
-    public System.Action OnOverviewStart;
-    public System.Action OnZoomInStart;
+    public System.Action OnOverview;
+    public System.Action OnZoomIn;
     public System.Action OnCountdownStart;
-    public System.Action OnGameplayStart;
-    public System.Action OnMenuStart;
+    public System.Action OnCountdownEnd;
+    public System.Action OnGameplay;
+    public System.Action OnMenu;
+    public System.Action OnFinished;
     public System.Action<string> OnCountdownMessage;
 
-    public float timeValue {  get; private set; }
+    public float TimeValue {  get; private set; }
 
     private void Awake()
     {
@@ -39,57 +37,39 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        if (player == null)
-        {
-            Debug.LogWarning("Player NULL");
-        }
-        _spawnPosition = player.transform.position;
-        EnterState(LevelState.Overview);
-
-        timeValue = 0f;
-        _finalSubframeRatio = -1f;
+        SetState(LevelState.Overview);
     }
 
-    private void OnEnable()
-    {
-        GameInput.LevelOverviewActions overviewActions = GlobalInputManager.Instance.InputActions.LevelOverview;
-        overviewActions.StartGame.performed += _ => EnterState(LevelState.ZoomingIn);
-
-        finishLine.OnFinishLineCrossed += EndGame;
-    }
-
-    public void EnterState(LevelState newState)
+    public void SetState(LevelState newState)
     {
         currentState = newState;
 
         switch (newState)
         {
             case LevelState.Overview:
-                GlobalInputManager.Instance.SetInputState_Overview();
-                OnOverviewStart?.Invoke();
+                OnOverview?.Invoke();
                 break;
 
             case LevelState.ZoomingIn:
-                GlobalInputManager.Instance.SetInputState_Blocked();
-                OnZoomInStart?.Invoke();
+                OnZoomIn?.Invoke();
                 StartCoroutine(ZoomInRoutine());
                 break;
 
             case LevelState.Countdown:
-                GlobalInputManager.Instance.SetInputState_Blocked();
                 OnCountdownStart?.Invoke();
                 StartCoroutine(CountdownRoutine());
                 break;
 
             case LevelState.Gameplay:
-                GlobalInputManager.Instance.SetInputState_Gameplay();
-                OnGameplayStart?.Invoke();
-                StartCoroutine(TimerRoutine());
+                OnGameplay?.Invoke();
                 break;
 
             case LevelState.LevelMenu:
-                GlobalInputManager.Instance.SetInputState_Menu();
-                OnMenuStart?.Invoke();
+                OnMenu?.Invoke();
+                break;
+
+            case LevelState.Finished:
+                OnFinished?.Invoke();
                 break;
         }
     }
@@ -98,24 +78,7 @@ public class LevelManager : MonoBehaviour
     {
         // Stops countdown coroutine if it's already running
         StopAllCoroutines();
-        ResetPlayer();
-        timeValue = 0f;
-        _finalSubframeRatio = -1f;
-        EnterState(LevelState.Countdown);
-    }
-
-    private void ResetPlayer()
-    {
-        player.transform.position = _spawnPosition;
-        player.transform.rotation = Quaternion.identity;
-        player.ResetPhysics();
-        playerEffects.StopThrusterEffects();
-    }
-
-    private void EndGame(float lineRatio)
-    {
-        _finalSubframeRatio = lineRatio;
-        EnterState(LevelState.Finished);
+        SetState(LevelState.Countdown);
     }
 
     private IEnumerator ZoomInRoutine()
@@ -123,30 +86,32 @@ public class LevelManager : MonoBehaviour
         WaitForSeconds wait = new(_ZoomInTime);
         yield return wait;
 
-        EnterState(LevelState.Countdown);
+        SetState(LevelState.Countdown);
     }
 
     private IEnumerator CountdownRoutine()
     {
-        OnCountdownMessage?.Invoke("3");
-        yield return _waitForSeconds1;
-        OnCountdownMessage?.Invoke("2");
-        yield return _waitForSeconds1;
-        OnCountdownMessage?.Invoke("1");
-        yield return _waitForSeconds1;
-
-        EnterState(LevelState.Gameplay);
+        yield return _waitForSeconds3;
+        OnCountdownEnd?.Invoke();
+        SetState(LevelState.Gameplay);
     }
 
-    public IEnumerator TimerRoutine()
+    public void ReturnToMainMenu()
     {
-        while(_finalSubframeRatio < 0)
+        SceneLoader.Instance.LoadScene(SceneLoader.Instance.mainMenuSceneName);
+    }
+
+    public void ToggleLevelMenu(bool active)
+    {
+        if (active) SetState(LevelState.LevelMenu);
+        else SetState(LevelState.Gameplay);
+    }
+
+    public void EndOverview()
+    {
+        if(currentState == LevelState.Overview)
         {
-            Debug.Log(_finalSubframeRatio);
-            timeValue += Time.deltaTime;
-            yield return timeValue;
+            SetState(LevelState.ZoomingIn);
         }
-        Debug.Log(_finalSubframeRatio);
-        timeValue += Time.deltaTime * _finalSubframeRatio;
     }
 }

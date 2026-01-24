@@ -1,8 +1,6 @@
 using System;
-using Unity.Cinemachine;
 using Unity.VectorGraphics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 class VectorLine 
 {
@@ -33,7 +31,6 @@ class VectorLine
 public class FinishLine : MonoBehaviour
 {
     private BoxCollider2D _finishLineCollider;
-    private CircleCollider2D _playerCollider;
 
     private VectorLine[] _edges;
 
@@ -62,17 +59,16 @@ public class FinishLine : MonoBehaviour
             edge.DrawLine(Color.blue);
         }
 
-        LevelManager.Instance.OnGameplayStart += EnableCollider;
+        LevelManager.Instance.OnGameplay += EnableCollider;
     }
 
     private void OnDestroy()
     {
-        LevelManager.Instance.OnGameplayStart -= EnableCollider;
+        LevelManager.Instance.OnGameplay -= EnableCollider;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        _playerCollider = other.GetComponent<CircleCollider2D>();
         HandleSubframeCalculation(other);
     }
 
@@ -84,17 +80,6 @@ public class FinishLine : MonoBehaviour
     private void EnableCollider()
     {
         _finishLineCollider.enabled = true;
-    }
-
-    private bool PlayerCrossedLine(Collider2D other)
-    {
-        Debug.Log($"Radius {_playerCollider.radius}");
-        Debug.Log($"Distance: {other.Distance(_finishLineCollider).distance}");
-
-
-        if (_playerCollider.radius + other.Distance(_finishLineCollider).distance < 0) return true;
-        
-        return false;
     }
 
     private void HandleSubframeCalculation(Collider2D other)

@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour
     public static SceneLoader Instance;
 
     [Header("Settings")]
-    [SerializeField] private string mainMenuSceneName = "MainMenu";
+    public string mainMenuSceneName = "MainMenu";
 
     private string _activeScene;
 

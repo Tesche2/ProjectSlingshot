@@ -13,12 +13,12 @@ public class VirtualCameraManager : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelManager.Instance.OnZoomInStart += ActivateFollow;
+        LevelManager.Instance.OnZoomIn += ActivateFollow;
     }
 
     private void OnDisable()
     {
-        LevelManager.Instance.OnZoomInStart -= ActivateFollow;
+        LevelManager.Instance.OnZoomIn -= ActivateFollow;
     }
 
     private void ActivateOverview()

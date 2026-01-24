@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
 
     public event Action OnThrusterStart;
     public event Action OnThrusterStop;
-    public event Action<Vector3, Vector3> OnFinishLineCross;
 
     private Vector2 _currentInputVector;
     private Rigidbody2D _rb;
@@ -102,13 +101,13 @@ public class PlayerController : MonoBehaviour
 
     private void HandleThrusterStarted()
     {
-        OnThrusterStart.Invoke();
+        OnThrusterStart?.Invoke();
     }
 
     private void HandleThrusterCanceled()
     {
         _currentInputVector = Vector2.zero;
-        OnThrusterStop.Invoke();
+        OnThrusterStop?.Invoke();
     }
 
     public void ApplyGravityForce(Vector2 force)
@@ -116,7 +115,7 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(force);
     }
 
-    public float getSpeed()
+    public float GetSpeed()
     {
         return _rb.linearVelocity.magnitude;
     }

@@ -1,4 +1,8 @@
+using NUnit.Framework;
 using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,31 +10,43 @@ public class LevelUIManager : MonoBehaviour
 {
     public static LevelUIManager Instance;
 
-    [SerializeField] GameObject MobileControls;
-    [SerializeField] GameObject GameMenu;
-    [SerializeField] GameObject OverviewMessage;
-    [SerializeField] GameObject Countdown;
-    [SerializeField] GameObject Timer;
+    private readonly static WaitForSeconds _waitForSeconds1 = new(1);
+
+    [Header("UI Elements")]
+    [SerializeField] GameObject _ui_mobileControls;
+    [SerializeField] GameObject _ui_gameMenu;
+    [SerializeField] GameObject _ui_overviewMessage;
+    [SerializeField] GameObject _ui_countdown;
+    [SerializeField] GameObject _ui_timer;
+    [SerializeField] GameObject _ui_endMenu;
+
+    [Header("Dependencies")]
+    [SerializeField] TimerManager _timerManager;
 
     TextMeshProUGUI _timerTMP;
+    TextMeshProUGUI _countdownTMP;
+
+    public System.Action OnMenuOpen;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-            DisableAllUI();
+            DisableAllUIExcept();
 
-        _timerTMP = Timer.GetComponent<TextMeshProUGUI>();
+        _timerTMP = _ui_timer.GetComponent<TextMeshProUGUI>();
+        _countdownTMP = _ui_countdown.GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
     {
-        LevelManager.Instance.OnOverviewStart += EnableOverviewMessage;
-        LevelManager.Instance.OnZoomInStart += DisableAllUI;
+        LevelManager.Instance.OnOverview += EnableOverviewMessage;
+        LevelManager.Instance.OnZoomIn += DisableAllUI;
         LevelManager.Instance.OnCountdownStart += EnableCountdown;
-        LevelManager.Instance.OnGameplayStart += GameStarted;
-        LevelManager.Instance.OnMenuStart += EnableGameMenu;
+        LevelManager.Instance.OnGameplay += GameStarted;
+        LevelManager.Instance.OnMenu += EnableGameMenu;
+        LevelManager.Instance.OnFinished += GameEnded; 
 
         LevelManager.Instance.OnCountdownMessage += DefineCountdownMessage;
         InputDeviceMonitor.Instance.OnDeviceChanged += InputDeviceChanged;
@@ -38,11 +54,12 @@ public class LevelUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        LevelManager.Instance.OnOverviewStart -= EnableOverviewMessage;
-        LevelManager.Instance.OnZoomInStart -= DisableAllUI;
+        LevelManager.Instance.OnOverview -= EnableOverviewMessage;
+        LevelManager.Instance.OnZoomIn -= DisableAllUI;
         LevelManager.Instance.OnCountdownStart -= EnableCountdown;
-        LevelManager.Instance.OnGameplayStart -= GameStarted;
-        LevelManager.Instance.OnMenuStart -= EnableGameMenu;
+        LevelManager.Instance.OnGameplay -= GameStarted;
+        LevelManager.Instance.OnMenu -= EnableGameMenu;
+        LevelManager.Instance.OnFinished += GameEnded;
 
         LevelManager.Instance.OnCountdownMessage -= DefineCountdownMessage;
         InputDeviceMonitor.Instance.OnDeviceChanged -= InputDeviceChanged;
@@ -50,7 +67,7 @@ public class LevelUIManager : MonoBehaviour
 
     private void Update()
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(LevelManager.Instance.timeValue);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(_timerManager.CurrentTime);
 
         string formattedTime = timeSpan.ToString(@"mm\:ss\.fff");
 
@@ -66,49 +83,45 @@ public class LevelUIManager : MonoBehaviour
         bool isTouch = device == DeviceType.Touch;
         bool isGameRunning = state == LevelState.Countdown || state == LevelState.Gameplay || state == LevelState.Finished;
 
-        if (isTouch && isGameRunning) MobileControls.SetActive(true);
-        else MobileControls.SetActive(false);
+        if (isTouch && isGameRunning) _ui_mobileControls.SetActive(true);
+        else _ui_mobileControls.SetActive(false);
     }
 
-    private void GameStarted()
+    public void GameStarted()
     {
-        DisableAllUI();
-        CheckForTouchOverlay();
-
-        Timer.SetActive(true);
+        DisableAllUIExcept(_ui_countdown, _ui_mobileControls, _ui_timer);
     }
 
     private void EnableCountdown()
     {
-        DisableAllUI();
+        DisableAllUIExcept();
+        StopAllCoroutines();
+
         CheckForTouchOverlay();
-
-        Debug.Log("Display Countdown");
-
-        Timer.SetActive(true);
-        Countdown.SetActive(true);
+        _ui_timer.SetActive(true);
+        _ui_countdown.SetActive(true);
+        StartCoroutine(CountdownRoutine());
     }
 
     private void EnableOverviewMessage()
     {
-        DisableAllUI();
-
-        Debug.Log("Display Overview");
+        DisableAllUIExcept();
 
         DefineOverviewMessage(InputDeviceMonitor.Instance.currentDevice);
-        OverviewMessage.SetActive(true);
+        _ui_overviewMessage.SetActive(true);
     }
 
     private void EnableGameMenu()
     {
-        DisableAllUI();
+        DisableAllUIExcept(_ui_timer);
 
-        GameMenu.SetActive(true);
+        _ui_gameMenu.SetActive(true);
+        OnMenuOpen?.Invoke();
     }
 
     private void DefineOverviewMessage(DeviceType device)
     {
-        TextMeshProUGUI overviewTMP = OverviewMessage.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI overviewTMP = _ui_overviewMessage.GetComponent<TextMeshProUGUI>();
 
         switch(device)
         {
@@ -128,7 +141,7 @@ public class LevelUIManager : MonoBehaviour
 
     private void DefineCountdownMessage(string message)
     {
-        TextMeshProUGUI countdownTMP = Countdown.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI countdownTMP = _ui_countdown.GetComponent<TextMeshProUGUI>();
         countdownTMP.text = message;
     }
 
@@ -136,16 +149,53 @@ public class LevelUIManager : MonoBehaviour
     {
         if (InputDeviceMonitor.Instance.currentDevice == DeviceType.Touch)
         {
-            if (!MobileControls.activeSelf) MobileControls.SetActive(true);
+            if (!_ui_mobileControls.activeSelf) _ui_mobileControls.SetActive(true);
         }
-        else MobileControls.SetActive(false);
+        else _ui_mobileControls.SetActive(false);
+    }
+
+    private void DisableAllUIExcept(params GameObject[] uiElements)
+    {
+        if (!uiElements.Contains(_ui_overviewMessage)) _ui_overviewMessage.SetActive(false);
+        if (!uiElements.Contains(_ui_mobileControls)) _ui_mobileControls.SetActive(false);
+        if (!uiElements.Contains(_ui_countdown)) _ui_countdown.SetActive(false);
+        if (!uiElements.Contains(_ui_gameMenu)) _ui_gameMenu.SetActive(false);
+        if (!uiElements.Contains(_ui_timer)) _ui_timer.SetActive(false);
+        if (!uiElements.Contains(_ui_overviewMessage)) _ui_endMenu.SetActive(false);
     }
 
     private void DisableAllUI()
     {
-        OverviewMessage.SetActive(false);
-        Countdown.SetActive(false);
-        GameMenu.SetActive(false);
-        Timer.SetActive(false);
+        DisableAllUIExcept();
+    }
+
+    private void GameEnded()
+    {
+        StartCoroutine(FinishRoutine());
+    }
+
+    private IEnumerator FinishRoutine()
+    {
+        // Give the player a few seconds to see their time
+        CheckForTouchOverlay();
+        WaitForSeconds wait = new(2f);
+        yield return wait;
+
+        // Change UI to end level menu
+        DisableAllUI();
+
+        _ui_endMenu.SetActive(true);
+        OnMenuOpen?.Invoke();
+    }
+
+    private IEnumerator CountdownRoutine()
+    {
+        for (int i = 3; i > 0; i--) {
+            _countdownTMP.text = i.ToString();
+            yield return _waitForSeconds1;
+        }
+        _countdownTMP.text = "GO!";
+        yield return _waitForSeconds1;
+        _ui_countdown.SetActive(false);
     }
 }
