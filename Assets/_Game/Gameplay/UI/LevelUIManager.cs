@@ -78,7 +78,7 @@ public class LevelUIManager : MonoBehaviour
     {
         DefineOverviewMessage(device);
 
-        LevelState state = LevelManager.Instance.currentState;
+        LevelState state = LevelManager.Instance.CurrentState;
 
         bool isTouch = device == DeviceType.Touch;
         bool isGameRunning = state == LevelState.Countdown || state == LevelState.Gameplay || state == LevelState.Finished;
@@ -192,7 +192,10 @@ public class LevelUIManager : MonoBehaviour
     {
         for (int i = 3; i > 0; i--) {
             _countdownTMP.text = i.ToString();
-            yield return _waitForSeconds1;
+            for (int j = (int)(1.0f / Time.fixedDeltaTime); j > 0; j--)
+            {
+                yield return new WaitForFixedUpdate();
+            }
         }
         _countdownTMP.text = "GO!";
         yield return _waitForSeconds1;

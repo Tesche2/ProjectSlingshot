@@ -120,6 +120,7 @@ public class FinishLine : MonoBehaviour
             float totalLength = playerTrajectory.Length();
             float linesRatio = totalLength > Mathf.Epsilon ? shortestDistance / totalLength : 1f;
 
+            Debug.Log($"Lines Ratio: {linesRatio}");
             OnFinishLineCrossed?.Invoke(linesRatio);
         }
     }

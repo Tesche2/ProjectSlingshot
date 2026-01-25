@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
             RotatePlayer(_rb.linearVelocity);
         }
 
-        PreviousFramePos = transform.position;
+        PreviousFramePos = _rb.position;
     }
 
     private void MovePlayer(Vector2 direction)
@@ -128,6 +128,6 @@ public class PlayerController : MonoBehaviour
         _currentInputVector = Vector2.zero;
         isGravityActive = false;
 
-        PreviousFramePos = transform.position;
+        PreviousFramePos = _rb.position;
     }
 }
