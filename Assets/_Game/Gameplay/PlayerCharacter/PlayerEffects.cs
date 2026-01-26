@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerEffects : MonoBehaviour
 {
-    [SerializeField] private float torqueCoefficient = 0.001f;
-
     [Header("Dependencies")]
     [SerializeField] private PlayerController controller;
 
@@ -35,7 +33,7 @@ public class PlayerEffects : MonoBehaviour
         impulseSource.GenerateImpulse();
     }
 
-    private void StopThrusterEffects()
+    public void StopThrusterEffects()
     {
         thrusterParticles.Stop(true);
     }

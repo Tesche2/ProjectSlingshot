@@ -6,52 +6,48 @@ using UnityEngine;
 [RequireComponent(typeof(CinemachineImpulseSource))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float thrusterForce = 5f;
-    [SerializeField] private float sidewaysCoefficient = 0.1f;
-    [SerializeField] private float backwardsCoefficient = 0.2f;
-    [SerializeField] private float torqueCoefficient = 0.001f;
+    [SerializeField] private PlayerConfig config;
 
     public event Action OnThrusterStart;
     public event Action OnThrusterStop;
 
-    private PlayerInputActions _inputActions;
     private Vector2 _currentInputVector;
     private Rigidbody2D _rb;
+    public Vector3 PreviousFramePos { get; private set; }
 
-    public bool isGravityActive = false;
+    [HideInInspector] public bool isGravityActive = false;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _inputActions = new PlayerInputActions();
     }
 
     private void OnEnable()
     {
-        PlayerInputActions.GameplayActions inputActions = _inputActions.Gameplay;
+        GameInput.GameplayActions gameplayActions = GlobalInputManager.Instance.InputActions.Gameplay;
 
-        inputActions.Move.performed += ctx => _currentInputVector = ctx.ReadValue<Vector2>();
-        inputActions.Move.started += _ => HandleThrusterStarted();
-        inputActions.Move.canceled += _ => HandleThrusterCanceled();
+        gameplayActions.Move.performed += ctx => _currentInputVector = ctx.ReadValue<Vector2>();
+        gameplayActions.Move.started += _ => HandleThrusterStarted();
+        gameplayActions.Move.canceled += _ => HandleThrusterCanceled();
 
-        inputActions.EnableGravity.performed += _ => isGravityActive = true;
-        inputActions.EnableGravity.canceled += _ => isGravityActive = false;
-        
-        inputActions.Enable();
+        gameplayActions.EnableGravity.performed += _ => isGravityActive = true;
+        gameplayActions.EnableGravity.canceled += _ => isGravityActive = false;
+
+        gameplayActions.Enable();
     }
 
     private void OnDisable()
     {
-        PlayerInputActions.GameplayActions inputActions = _inputActions.Gameplay;
+        GameInput.GameplayActions gameplayActions = GlobalInputManager.Instance.InputActions.Gameplay;
 
-        inputActions.Move.performed -= ctx => _currentInputVector = ctx.ReadValue<Vector2>();
-        inputActions.Move.started -= _ => HandleThrusterStarted();
-        inputActions.Move.canceled -= _ => HandleThrusterCanceled();
+        gameplayActions.Move.performed -= ctx => _currentInputVector = ctx.ReadValue<Vector2>();
+        gameplayActions.Move.started -= _ => HandleThrusterStarted();
+        gameplayActions.Move.canceled -= _ => HandleThrusterCanceled();
 
-        inputActions.EnableGravity.performed -= _ => isGravityActive = true;
-        inputActions.EnableGravity.canceled -= _ => isGravityActive = false;
-        
-        inputActions.Disable();
+        gameplayActions.EnableGravity.performed -= _ => isGravityActive = true;
+        gameplayActions.EnableGravity.canceled -= _ => isGravityActive = false;
+
+        gameplayActions.Disable();
     }    
 
     public void FixedUpdate()
@@ -64,6 +60,8 @@ public class PlayerController : MonoBehaviour
         {
             RotatePlayer(_rb.linearVelocity);
         }
+
+        PreviousFramePos = _rb.position;
     }
 
     private void MovePlayer(Vector2 direction)
@@ -73,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 DefineThrusterForce(Vector2 inputDirection)
     {
-        Vector2 force = inputDirection * thrusterForce;
+        Vector2 force = inputDirection * config.thrusterForce;
         Vector2 vel = _rb.linearVelocity;
 
         // Get colinear and orthogonal components from the force in relation to the velocity.
@@ -83,10 +81,10 @@ public class PlayerController : MonoBehaviour
         // Forwards thrust is limited by current velocity, backwards thrust is strenghened by it, to facilitate stopping
         float colCoeff = Vector2.Dot(colinear, vel) > 0 ?  
             Mathf.Max(0, colinear.magnitude - vel.magnitude) : 
-            Mathf.Max(1, vel.magnitude * backwardsCoefficient);
+            Mathf.Max(1, vel.magnitude * config.backwardsCoefficient);
 
         // Sideways thrust is strenghened by velocity, to facilitate steering
-        float orthCoeff = Mathf.Max(1, vel.magnitude * sidewaysCoefficient);
+        float orthCoeff = Mathf.Max(1, vel.magnitude * config.sidewaysCoefficient);
 
         return colinear * colCoeff + orthogonal * orthCoeff;
     }
@@ -98,18 +96,18 @@ public class PlayerController : MonoBehaviour
         float aD = angularDistance;
 
         float damping = ((aV >= 0 && aD <= 0) || (aV <= 0 && aD >=0)) ? 0.15f : 1f;
-        _rb.AddTorque(angularDistance * torqueCoefficient / damping);
+        _rb.AddTorque(angularDistance * config.torqueCoefficient / damping);
     }
 
     private void HandleThrusterStarted()
     {
-        OnThrusterStart.Invoke();
+        OnThrusterStart?.Invoke();
     }
 
     private void HandleThrusterCanceled()
     {
         _currentInputVector = Vector2.zero;
-        OnThrusterStop.Invoke();
+        OnThrusterStop?.Invoke();
     }
 
     public void ApplyGravityForce(Vector2 force)
@@ -117,8 +115,19 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(force);
     }
 
-    public float getSpeed()
+    public float GetSpeed()
     {
         return _rb.linearVelocity.magnitude;
+    }
+
+    public void ResetPhysics()
+    {
+        _rb.linearVelocity = Vector2.zero;
+        _rb.angularVelocity = 0f;
+
+        _currentInputVector = Vector2.zero;
+        isGravityActive = false;
+
+        PreviousFramePos = _rb.position;
     }
 }

@@ -6,7 +6,7 @@
 ![Unity](https://img.shields.io/badge/Unity-6-black)
 ![Status](https://img.shields.io/badge/status-Prototype-orange)
 
-**Project Slingshot** is a mobile-first "runner" where players manipulate gravitational forces to navigate obstacle-courses. The core mechanic involves toggling the rocket's internal gravity receiver to execute precise **gravitational slingshots** around planetary bodies.
+**Project Slingshot** is a mobile-first runner where players manipulate gravitational forces to navigate obstacle-courses. The core mechanic involves toggling the rocket's internal gravity receiver to execute precise **gravitational slingshots** around planetary bodies.
 
 ![Gameplay Demo](Docs/Gameplay.gif)
 
@@ -32,24 +32,32 @@
 * **Scalable Codebase:**
   * Domain Driven folder structure for easy maintenance.
 
-* **Allocation-Free Physics Loop:**
-  * Gravity calculations rely on cached lists and Trigger events rather than runtime queries (`FindObjectsOfType`), preventing Garbage Collection spikes during gameplay.
+* **Automatic Controller Device Detection**
+  *  Input controller type is automatically detected, changing the game GUI based on it.
+
+* **Subframe Time Calculation**
+  * Time to reach the finish line is calculated down to a millisecond precision, even when the physics calculations are performed at a fixed 50fps.
 
 ## Installation & Setup
 1.  **Clone** the repository.
 2.  Open in **Unity 6** (Recommended: 6000.3.1f1 or later).
-3.  Open the scene: `_Game/Scenes/SampleScene.unity`.
+3.  Open the scene: `_Game/Scenes/Core.unity`.
 4.  Press Play.
-    * *Controls:* **WASD** (Thrust), **Space / LMB** (Hold for Gravity).
+    * **Controls:**
+    * *Keyboard:* **WASD** (Thrust), **Space** (Hold for Gravity).
+    * *Gamepad:* **Left Stick** (Thrust), **South Button** (Hold for Gravity).
+    * *Mobile:* **On-Screen Overlay**, Simulating a Gamepad. 
 
 ## Roadmap
 - [x] Newtonian Gravity Implementation
 - [x] Deterministic Player Controller
 - [x] Dynamic Velocity-Based Camera Zoom
-- [ ] Refactor Planet Data into **ScriptableObjects** for designer iteration
-- [ ] Mobile Touch UI Overlay (Virtual Joysticks/Buttons)
+- [x] Refactor data into **ScriptableObjects** for designer iteration
+- [x] Mobile Touch UI Overlay (Virtual Joysticks/Buttons)
+- [ ] Game Save System
 - [ ] Ghost Replay System (recording inputs per physics tick)
-- [ ] General Visual Improvements
+- [ ] General Visual Improvements (UI and Gameplay)
+- [ ] Sound Effects and Soundtrack
 
 ---
 *Developed by [Nikolas Tesche](https://www.linkedin.com/in/nikolas-tesche-3112b9167)*
