@@ -31,6 +31,5 @@ public class VirtualCameraManager : MonoBehaviour
     {
         overviewCamera.Priority = 0;
         followCamera.Priority = 1;
-        Debug.Log("Changing to Follow Camera");
     }
 }
