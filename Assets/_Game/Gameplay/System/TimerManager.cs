@@ -8,7 +8,8 @@ public class TimerManager : MonoBehaviour
 
     [SerializeField] private List<FinishLine> _finishLines;
 
-    public float CurrentTime { get; private set; }
+    private float _currentTime;
+    public float DisplayTime { get; private set; }
 
     private void Awake()
     {
@@ -47,12 +48,14 @@ public class TimerManager : MonoBehaviour
     private void ResetTimer()
     {
         StopAllCoroutines();
-        CurrentTime = 0f;
+        _currentTime = 0f;
+        DisplayTime = 0f;
     }
 
     private void StartTimer()
     {
         StartCoroutine(TimerRoutine());
+        StartCoroutine(SmoothTimerRoutine());
     }
 
     private void StopTimer(float subframeRatio)
@@ -61,8 +64,9 @@ public class TimerManager : MonoBehaviour
         StopAllCoroutines();
 
         // Compensate for the last iteration of TimerRoutine()
-        CurrentTime -= Time.deltaTime;
-        CurrentTime += subframeRatio * Time.deltaTime;
+        _currentTime -= Time.deltaTime;
+        _currentTime += subframeRatio * Time.deltaTime;
+        DisplayTime = _currentTime;
 
         LevelManager.Instance.SetState(LevelState.Finished);
     }
@@ -71,8 +75,18 @@ public class TimerManager : MonoBehaviour
     {
         while(true)
         {
-            CurrentTime += Time.deltaTime;
+            _currentTime += Time.deltaTime;
             yield return new WaitForFixedUpdate();
+        }
+    }
+
+    public IEnumerator SmoothTimerRoutine()
+    {
+        while(true)
+        {
+            float interpolation = Time.time - Time.fixedTime;
+            DisplayTime = _currentTime + interpolation;
+            yield return null;
         }
     }
 }

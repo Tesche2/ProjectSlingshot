@@ -67,7 +67,7 @@ public class LevelUIManager : MonoBehaviour
 
     private void Update()
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(_timerManager.CurrentTime);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(_timerManager.DisplayTime);
 
         string formattedTime = timeSpan.ToString(@"mm\:ss\.fff");
 
