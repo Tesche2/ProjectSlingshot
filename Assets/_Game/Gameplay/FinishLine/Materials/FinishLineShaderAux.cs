@@ -7,6 +7,7 @@ public class FinishLineShaderAux : MonoBehaviour
     private MaterialPropertyBlock _propBlock;
 
     private static readonly int HeightProp = Shader.PropertyToID("_ObjectHeight");
+    private static readonly int WidthProp = Shader.PropertyToID("_ObjectWidth");
 
     private void Awake()
     {
@@ -44,6 +45,8 @@ public class FinishLineShaderAux : MonoBehaviour
 
         float height = _renderer.size.y * transform.localScale.y;
         _propBlock.SetFloat(HeightProp, height);
+        float width = _renderer.size.x * transform.localScale.x;
+        _propBlock.SetFloat(WidthProp, width);
 
         _renderer.SetPropertyBlock(_propBlock);
     }

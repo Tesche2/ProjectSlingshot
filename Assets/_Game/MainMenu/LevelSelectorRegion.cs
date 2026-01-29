@@ -106,7 +106,7 @@ public class LevelSelectorRegion : MonoBehaviour
             Button btnComponent = button.GetComponent<Button>();
             btnComponent.onClick.AddListener(() =>
             {
-                SceneLoader.Instance.LoadScene("Level_Template");
+                SceneLoader.Instance.LoadScene("Level_Test");
             });
         }
     }
