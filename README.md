@@ -6,7 +6,7 @@
 ![Unity](https://img.shields.io/badge/Unity-6-black)
 ![Status](https://img.shields.io/badge/status-Prototype-orange)
 
-**Project Slingshot** is a mobile-first runner where players manipulate gravitational forces to navigate obstacle-courses. The core mechanic involves toggling the rocket's internal gravity receiver to execute precise **gravitational slingshots** around planetary bodies.
+**Project Slingshot** is a mobile runner where players manipulate gravitational forces to navigate obstacle-courses. The core mechanic involves toggling the ship's gravity influence to execute precise **gravitational slingshots** around planetary bodies.
 
 ![Gameplay Demo](Docs/Gameplay.gif)
 
@@ -25,12 +25,9 @@
   * Input handling is synchronized with the physics engine rather than the render loop.
   * Ensures identical behavior across different frame rates and enables future replay/speedrun verification.
 
-* **Mobile-First Architecture:**
-  * Decoupled visual feedback from physics logic.
-  * Touch input buffer prevents "dropped inputs" during frame spikes.
-
 * **Scalable Codebase:**
   * Domain Driven folder structure for easy maintenance.
+  * Use of Scriptable Objects to help decouple data from code.
 
 * **Automatic Controller Device Detection**
   *  Input controller type is automatically detected, changing the game GUI based on it.
