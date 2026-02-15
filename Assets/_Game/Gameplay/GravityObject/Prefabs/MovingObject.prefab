@@ -1,0 +1,303 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4181791425932840851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2288026148337014076}
+  m_Layer: 0
+  m_Name: MovingObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2288026148337014076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4181791425932840851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.72503, y: 9.51429, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3106464059187477058}
+  - {fileID: 241801908823027101}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7176507872219732884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 241801908823027101}
+  - component: {fileID: 3624381032912712126}
+  m_Layer: 0
+  m_Name: Trajectory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &241801908823027101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7176507872219732884}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2288026148337014076}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3624381032912712126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7176507872219732884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineContainer
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 1
+      TangentIn:
+        x: 0
+        y: 0
+        z: -1.6857667
+      TangentOut:
+        x: 0
+        y: 0
+        z: 9.094979
+      Rotation:
+        value:
+          x: 0.57205087
+          y: 0.41564137
+          z: 0.41564575
+          w: 0.57204777
+    - Position:
+        x: 6.760455
+        y: -15.766457
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: -4.2139187
+      TangentOut:
+        x: 0
+        y: 0
+        z: 4.5302153
+      Rotation:
+        value:
+          x: 0.58459395
+          y: 0.39780644
+          z: 0.39780644
+          w: 0.584594
+    - Position:
+        x: 25.900455
+        y: -6.026457
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: -9.338234
+      TangentOut:
+        x: 0
+        y: 0
+        z: 1.948332
+      Rotation:
+        value:
+          x: 0.6313351
+          y: 0.31845865
+          z: 0.318463
+          w: 0.63133305
+    m_MetaData:
+    - Mode: 3
+      Tension: 0.5
+    - Mode: 3
+      Tension: 0.5
+    - Mode: 3
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
+--- !u!1001 &1405516203487198511
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2288026148337014076}
+    m_Modifications:
+    - target: {fileID: 670005248399317686, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_Name
+      value: Planet
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9876929
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000037401915
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.00000064074993
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.15640573
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6529554233927252916, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2413806693520163455, guid: ac9bd087a7b05e74ba49c258e9f6ead1, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 670005248399317686, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 86706125488715008}
+    - targetCorrespondingSourceObject: {fileID: 670005248399317686, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3422806780193778497}
+  m_SourcePrefab: {fileID: 100100000, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+--- !u!1 &1931256660959291289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 670005248399317686, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+  m_PrefabInstance: {fileID: 1405516203487198511}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &86706125488715008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931256660959291289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineAnimate
+  m_Target: {fileID: 3624381032912712126}
+  m_PlayOnAwake: 0
+  m_LoopMode: 0
+  m_Method: 0
+  m_Duration: 10
+  m_MaxSpeed: 4.1967316
+  m_EasingMode: 0
+  m_AlignmentMode: 1
+  m_ObjectForwardAxis: 0
+  m_ObjectUpAxis: 2
+  m_StartOffset: 0
+--- !u!114 &3422806780193778497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931256660959291289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9506bea45633e4b9b41b61607f9726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrajectoryFollow
+  _positionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.0066445186
+      outSlope: 0.0066445186
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.35833332
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &3106464059187477058 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4079422404576397165, guid: 5cecf42f83d10ba43a40afa30ec51e2a, type: 3}
+  m_PrefabInstance: {fileID: 1405516203487198511}
+  m_PrefabAsset: {fileID: 0}

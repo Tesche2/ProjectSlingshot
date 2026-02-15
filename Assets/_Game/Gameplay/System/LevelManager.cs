@@ -5,7 +5,6 @@ public enum LevelState { Overview, ZoomingIn, Countdown, Gameplay, LevelMenu, Fi
 
 public class LevelManager : MonoBehaviour
 {
-    private readonly static WaitForSeconds _waitForSeconds3 = new(3);
     public static LevelManager Instance;
 
     public LevelState CurrentState { get; private set; }
