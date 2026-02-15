@@ -21,10 +21,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Level_Template.unity
     guid: 5141aac325eeec546bdcd14391b0e851
   - enabled: 1
-    path: Assets/Scenes/Level_GravGun.unity
+    path: Assets/Scenes/Levels/Level_GravGun.unity
     guid: 6bd528b420a2ced469edca78f3011fd1
   - enabled: 1
-    path: Assets/Scenes/Level_ShortestPath.unity
+    path: Assets/Scenes/Levels/Level_ShortestPath.unity
     guid: 4401358b66c183a4fbb64834c99acee2
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
