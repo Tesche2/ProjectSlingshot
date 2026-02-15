@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(GridLayoutGroup))]
@@ -106,7 +104,7 @@ public class LevelSelectorRegion : MonoBehaviour
             Button btnComponent = button.GetComponent<Button>();
             btnComponent.onClick.AddListener(() =>
             {
-                SceneLoader.Instance.LoadScene("Level_Test");
+                SceneLoader.Instance.LoadScene("Level_ShortestPath");
             });
         }
     }

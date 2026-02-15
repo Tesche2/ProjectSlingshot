@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Core.unity
     guid: 2ae27fe0caba5d14cb1816c71cda698e
   - enabled: 1
+    path: Assets/Scenes/Core_Utils.unity
+    guid: e09b6ad0f04a11d4a86f7a3902d0cd74
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: a75b89d0f856de84683a80303bf56e4a
   - enabled: 1
@@ -17,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_Template.unity
     guid: 5141aac325eeec546bdcd14391b0e851
+  - enabled: 1
+    path: Assets/Scenes/Level_GravGun.unity
+    guid: 6bd528b420a2ced469edca78f3011fd1
+  - enabled: 1
+    path: Assets/Scenes/Level_ShortestPath.unity
+    guid: 4401358b66c183a4fbb64834c99acee2
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 7e8a479fd64e62c40a70717996de0abf, type: 2}

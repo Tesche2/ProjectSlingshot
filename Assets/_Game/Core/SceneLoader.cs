@@ -8,6 +8,7 @@ public class SceneLoader : MonoBehaviour
 
     [Header("Settings")]
     public string mainMenuSceneName = "MainMenu";
+    public string coreUtilsScene = "Core_Utils";
 
     private string _activeScene;
 
@@ -18,11 +19,12 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
-        LoadScene(mainMenuSceneName);
+        StartCoroutine(LoadMainMenu());
     }
 
     public void LoadScene(string sceneName)
     {
+        Debug.Log($"Changing to scene {sceneName}");
         StartCoroutine(SceneChangeTask(sceneName));
     }
 
@@ -45,7 +47,16 @@ public class SceneLoader : MonoBehaviour
 
         Scene scene = SceneManager.GetSceneByName(newScene);
         SceneManager.SetActiveScene(scene);
-
         _activeScene = newScene;
+    }
+
+    public IEnumerator LoadMainMenu()
+    {
+        yield return SceneManager.LoadSceneAsync(coreUtilsScene, LoadSceneMode.Additive);
+
+        yield return SceneManager.LoadSceneAsync(mainMenuSceneName, LoadSceneMode.Additive);
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(mainMenuSceneName));
+        _activeScene = mainMenuSceneName;
     }
 }
