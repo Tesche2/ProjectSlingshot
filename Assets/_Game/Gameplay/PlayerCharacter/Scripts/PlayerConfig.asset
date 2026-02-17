@@ -16,3 +16,5 @@ MonoBehaviour:
   sidewaysCoefficient: 0.1
   backwardsCoefficient: 0.2
   torqueCoefficient: 0.05
+  heatThreshold: 1000
+  cooldownRate: 5

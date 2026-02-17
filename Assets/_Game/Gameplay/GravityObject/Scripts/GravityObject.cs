@@ -5,7 +5,9 @@ public class GravityObject : MonoBehaviour
     [SerializeField] private GravityObjectConfig config;
     [SerializeField] private float _gravityForce;
 
-    private PlayerController _player;
+    protected PlayerController _player;
+    protected float sqrDistToPlayer;
+
     private Vector2 _currentPosition;
     private Vector2 _currentVelocity;
 
@@ -17,12 +19,12 @@ public class GravityObject : MonoBehaviour
         _currentPosition = transform.position;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         _currentVelocity = (Vector2) transform.position - _currentPosition;
         _currentPosition = transform.position;
 
-        if (_player != null && _player.isGravityActive)
+        if (_player != null)
         {
             ApplyGravityInfluence();
         }
@@ -35,19 +37,20 @@ public class GravityObject : MonoBehaviour
 
         // Find direction and distance
         Vector2 heading = myPos - playerPos;
-        float sqrDist = heading.sqrMagnitude;
+        sqrDistToPlayer = heading.sqrMagnitude;
 
         // Ignore tiny distances to avoid overblown forces
-        if (sqrDist < 0.001f) return;
+        if (sqrDistToPlayer < 0.001f) return;
 
         // Calculate and apply force, proportional to the inverse of the square distance
-        Vector2 force = _gravityForce * CalculateEscapeAssistForce(heading) * heading.normalized / sqrDist;
+        Vector2 force = _gravityForce * CalculateEscapeAssistForce(heading) * heading.normalized / sqrDistToPlayer;
         _player.ApplyGravityForce(force);
     }
 
     // Tugs the player in if it's currently moving away from a planet, this helps make tighter turns around them
     private float CalculateEscapeAssistForce(Vector2 heading)
     {
+        // Only apply escape assist if this field is the sole influence over the player
         if (_numberOfInfluencingFields > 1) return 1f;
 
         Vector2 relativeVelocity = _player.GetVelocity() - _currentVelocity;
@@ -60,14 +63,14 @@ public class GravityObject : MonoBehaviour
         else return 1f;
     }
 
-    private void OnTriggerEnter2D(Collider2D playerCollider)
+    protected virtual void OnTriggerEnter2D(Collider2D playerCollider)
     {
         _player = playerCollider.gameObject.GetComponent<PlayerController>();
         _numberOfInfluencingFields += 1;
         Debug.Log(_numberOfInfluencingFields);
     }
 
-    private void OnTriggerExit2D(Collider2D playerCollider)
+    protected virtual void OnTriggerExit2D(Collider2D playerCollider)
     {
         _numberOfInfluencingFields -= 1;
         Debug.Log(_numberOfInfluencingFields);

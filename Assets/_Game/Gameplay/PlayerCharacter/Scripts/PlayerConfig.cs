@@ -8,4 +8,8 @@ public class PlayerConfig : ScriptableObject
     [SerializeField] public float sidewaysCoefficient = 0.1f;
     [SerializeField] public float backwardsCoefficient = 0.2f;
     [SerializeField] public float torqueCoefficient = 0.05f;
+
+    [Header("Heat")]
+    [SerializeField] public float heatThreshold = 10000f;
+    [SerializeField] public float cooldownRate = 20.0f;
 }

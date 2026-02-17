@@ -5,6 +5,7 @@ public class PlayerLevelHandler : MonoBehaviour
 
     [SerializeField] private PlayerController _controller;
     [SerializeField] private PlayerEffects _effects;
+    [SerializeField] private HeatHandler _heatHandler;
 
     private Vector3 _initialPos;
     private Quaternion _initialRot;

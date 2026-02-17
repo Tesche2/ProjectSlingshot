@@ -12,8 +12,6 @@ public class SplineRenderer : MonoBehaviour
 
     private Spline _spline;
 
-    private float _splineLength;
-
     void Awake()
     {
         _splineContainer = GetComponent<SplineContainer>();
@@ -21,7 +19,6 @@ public class SplineRenderer : MonoBehaviour
         _cam = Camera.main;
 
         _spline = _splineContainer.Spline;
-        _splineLength = _spline.GetLength();
 
         DrawSpline();
     }

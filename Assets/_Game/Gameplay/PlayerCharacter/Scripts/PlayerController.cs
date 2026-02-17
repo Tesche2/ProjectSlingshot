@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     [HideInInspector] public Vector3 PreviousFramePos { get; private set; }
 
-    [HideInInspector] public bool isGravityActive = false;
+    [HideInInspector] private bool isGravityActive = false;
 
     private void Awake()
     {
@@ -112,7 +112,8 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyGravityForce(Vector2 force)
     {
-        _rb.AddForce(force);
+        if(isGravityActive)
+            _rb.AddForce(force);
     }
 
     public float GetSpeed()
