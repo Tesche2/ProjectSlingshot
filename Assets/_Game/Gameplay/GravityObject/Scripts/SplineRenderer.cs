@@ -31,12 +31,9 @@ public class SplineRenderer : MonoBehaviour
         // Ensure line width remains constant regardless of camera distance
         _lineRenderer.startWidth = config.baseSplineWidth * _cam.orthographicSize / config.baseCameraOrthographicSize;
 
-        // Find the length of the spline on the screen
-        float _visualLength = _splineLength * config.baseCameraOrthographicSize / _cam.orthographicSize;
-
-        // Calculate the number of dashes that should be displayed and scale texture accordingly
-        float _numberOfDashes = (int)(_visualLength / config.baseSplineDashLength);
-        _lineRenderer.textureScale = new Vector2(_numberOfDashes / _splineLength, 0);
+        // Calculate the length of dashes based on camera distance and scale texture accordingly
+        float _dashLength = config.baseCameraOrthographicSize / (_cam.orthographicSize * config.baseSplineDashLength);
+        _lineRenderer.textureScale = new Vector2(_dashLength, 0);
     }
 
     private void DrawSpline()

@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _currentInputVector;
     private Rigidbody2D _rb;
-    public Vector3 PreviousFramePos { get; private set; }
+    [HideInInspector] public Vector3 PreviousFramePos { get; private set; }
 
     [HideInInspector] public bool isGravityActive = false;
 
@@ -118,6 +118,11 @@ public class PlayerController : MonoBehaviour
     public float GetSpeed()
     {
         return _rb.linearVelocity.magnitude;
+    }
+
+    public Vector2 GetVelocity()
+    {
+        return _rb.linearVelocity;
     }
 
     public void ResetPhysics()

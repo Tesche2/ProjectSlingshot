@@ -5110,6 +5110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0911f2514630ec0469d53047477e7657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  config: {fileID: 11400000, guid: 585bc863532a1f14497644a1eaf017fe, type: 2}
   _gravityForce: 10000
 --- !u!114 &5183557232066471742
 MonoBehaviour:

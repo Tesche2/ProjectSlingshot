@@ -3,8 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GravityObjectConfig", menuName = "Config/Gravity Object Config")]
 public class GravityObjectConfig : ScriptableObject
 {
+    [Header("Gravity")]
+    [SerializeField] public float escapeAssistCoefficient = .1f;
+
     [Header("Camera")]
-    [SerializeField] public int baseCameraOrthographicSize = 5;
+    [SerializeField] public float baseCameraOrthographicSize = 5;
 
     [Header("Outline")]
     [SerializeField] public int outlineSegments = 50;
