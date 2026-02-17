@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e4f3bac8de57b4a88e485c3aba1af9, type: 3}
   m_Name: GravityObjectConfig
   m_EditorClassIdentifier: Assembly-CSharp::GravityObjectConfig
-  segments: 50
-  minSegments: 3
-  baseWidth: 0.1
-  baseDashLength: 1.5
+  baseCameraOrthographicSize: 5
+  outlineSegments: 50
+  minOutlineSegments: 3
+  baseOutlineWidth: 0.1
+  baseOutlineDashLength: 1.5
+  splineSegments: 50
+  baseSplineWidth: 0.05
+  baseSplineDashLength: 0.6

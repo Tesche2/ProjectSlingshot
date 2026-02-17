@@ -1,28 +1,30 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
+[RequireComponent(typeof(CinemachineCamera))]
 public class FollowCamController : MonoBehaviour
 { 
-    [SerializeField] private CameraConfig config;
-    [SerializeField] private Rigidbody2D playerRb;
+    [SerializeField] private CameraConfig _config;
+    [SerializeField] private Rigidbody2D _playerRb;
+    [SerializeField] private AnimationCurve _zoomCurve;
 
-    private CinemachineCamera cmCam;
+    private CinemachineCamera _cmCam;
 
     private void Awake()
     {
-        cmCam = GetComponent<CinemachineCamera>();
+        _cmCam = GetComponent<CinemachineCamera>();
     }
 
     private void LateUpdate()
     {
-        float playerSpeed = playerRb.linearVelocity.magnitude;
+        float playerSpeed = _playerRb.linearVelocity.magnitude;
 
-        float targetZoom = config.zoomCurve.Evaluate(playerSpeed);
-        float currentZoom = cmCam.Lens.OrthographicSize;
+        float targetZoom = _zoomCurve.Evaluate(playerSpeed);
+        float currentZoom = _cmCam.Lens.OrthographicSize;
 
-        float zoomSpeed = currentZoom > targetZoom ? config.zoomInSpeed : config.zoomOutSpeed;
+        float zoomSpeed = currentZoom > targetZoom ? _config.zoomInSpeed : _config.zoomOutSpeed;
 
-        cmCam.Lens.OrthographicSize = Mathf.Lerp(
+        _cmCam.Lens.OrthographicSize = Mathf.Lerp(
             currentZoom,
             targetZoom,
             zoomSpeed * Time.deltaTime

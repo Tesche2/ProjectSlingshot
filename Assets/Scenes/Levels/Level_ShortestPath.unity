@@ -844,6 +844,14 @@ PrefabInstance:
       propertyPath: playerRb
       value: 
       objectReference: {fileID: 115349031}
+    - target: {fileID: 1883339125811301311, guid: a76057de4a69a3a449be2f305a878d90, type: 3}
+      propertyPath: _playerRb
+      value: 
+      objectReference: {fileID: 115349031}
+    - target: {fileID: 4409697812172690943, guid: a76057de4a69a3a449be2f305a878d90, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 36.825
+      objectReference: {fileID: 0}
     - target: {fileID: 5089024492369467838, guid: a76057de4a69a3a449be2f305a878d90, type: 3}
       propertyPath: bounds
       value: 

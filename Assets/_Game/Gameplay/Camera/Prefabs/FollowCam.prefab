@@ -145,5 +145,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af63d7b66c129ca47a841714e251ce36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  config: {fileID: 11400000, guid: a6b74a7d4742550458fc8d2b4006ae8f, type: 2}
-  playerRb: {fileID: 0}
+  _config: {fileID: 11400000, guid: a6b74a7d4742550458fc8d2b4006ae8f, type: 2}
+  _playerRb: {fileID: 0}
+  _zoomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 5
+      inSlope: 3
+      outSlope: 3
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 5
+      value: 20
+      inSlope: 1.0492234
+      outSlope: 0.686895
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.45817748
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 300
+      value: 300
+      inSlope: 0.9491525
+      outSlope: 0.9491525
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
