@@ -4,7 +4,8 @@ using UnityEngine;
 // Renders a dashed outline around the gravity influence region, ensuring dash length remains constant regardless of camera ortographic size.
 public class OutlineRenderer : MonoBehaviour
 {
-    [SerializeField] private GravityObjectConfig config;
+    [SerializeField] private GravityObjectConfig _config;
+    [SerializeField] private CameraConfig _camConfig;
 
     private LineRenderer _lineRenderer;
     private Camera _cam;
@@ -30,26 +31,26 @@ public class OutlineRenderer : MonoBehaviour
     private void Update()
     {
         // Ensure line width remains constant regardless of camera distance
-        _lineRenderer.startWidth = config.baseOutlineWidth * _cam.orthographicSize / config.baseCameraOrthographicSize;
+        _lineRenderer.startWidth = _config.baseOutlineWidth * _cam.orthographicSize / _camConfig.baseOrthographicSize;
 
         // Rotate outline towards the player, this helps hide the fact that dashes spawn and disappear all in the same spot
         Vector3 directionToPlayer = _player.transform.position - transform.position;
         transform.right = directionToPlayer;
 
         // Find the size of the circumference on the screen
-        float _visualCircumference = _baseCircumference * config.baseCameraOrthographicSize / _cam.orthographicSize;
+        float _visualCircumference = _baseCircumference * _camConfig.baseOrthographicSize / _cam.orthographicSize;
 
         // Calculate the number of dashes that should be displayed and scale texture accordingly
-        float _numberOfDashes = Mathf.Max(config.minOutlineSegments, (int) (_visualCircumference / config.baseOutlineDashLength));
+        float _numberOfDashes = Mathf.Max(_config.minOutlineSegments, (int) (_visualCircumference / _config.baseOutlineDashLength));
         _lineRenderer.textureScale = new Vector2(_numberOfDashes / _baseCircumference, 0);
     }
 
     private void DrawCircle()
     {
-        _lineRenderer.positionCount = config.outlineSegments;
-        float anglePerStep = 360f / config.outlineSegments;
+        _lineRenderer.positionCount = _config.outlineSegments;
+        float anglePerStep = 360f / _config.outlineSegments;
 
-        for (int i = 0; i < config.outlineSegments; i++)
+        for (int i = 0; i < _config.outlineSegments; i++)
         {
             float angle = i * anglePerStep * Mathf.Deg2Rad;
             float x = Mathf.Cos(angle) * 0.5f;

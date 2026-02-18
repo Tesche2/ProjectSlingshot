@@ -5,23 +5,33 @@ public class HeatHandler : MonoBehaviour
 {
     [SerializeField] private PlayerConfig _config;
 
-    private float _currentTemperature;
+    public float CurrentTemperature { get; private set;}
     public bool isInHeatField = false;
+
+    public System.Action onOverheat;
+
+    private bool _isOverheated = false;
 
     void FixedUpdate()
     {
         if(!isInHeatField)
-            _currentTemperature = Mathf.Max(0, _currentTemperature - _config.cooldownRate);
-
-        Debug.Log(_currentTemperature);
-        
-        if (_currentTemperature > _config.heatThreshold)
-            Debug.Log("OVERHEATING");
+            CurrentTemperature = Mathf.Max(0, CurrentTemperature - _config.cooldownRate);
     }
 
     public void HeatUp(float temperature)
     {
-        Debug.Log($"Heat up {temperature}");
-        _currentTemperature += temperature;
+        CurrentTemperature += temperature;
+
+        if (CurrentTemperature >= _config.heatThreshold && !_isOverheated)
+        {
+            onOverheat.Invoke();
+            _isOverheated = true;
+        }
+    }
+
+    public void ResetTemperature()
+    {
+        CurrentTemperature = 0f;
+        _isOverheated = false;
     }
 }

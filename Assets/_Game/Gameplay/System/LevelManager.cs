@@ -1,7 +1,7 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
-public enum LevelState { Overview, ZoomingIn, Countdown, Gameplay, LevelMenu, Finished }
+public enum LevelState { Overview, ZoomingIn, Countdown, Gameplay, LevelMenu, Finished, PlayerDead }
 
 public class LevelManager : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     public System.Action OnGameplay;
     public System.Action OnMenu;
     public System.Action OnFinished;
+    public System.Action OnPlayerDead;
     public System.Action<string> OnCountdownMessage;
 
     public float TimeValue {  get; private set; }
@@ -67,6 +68,10 @@ public class LevelManager : MonoBehaviour
             case LevelState.Finished:
                 OnFinished?.Invoke();
                 break;
+
+            case LevelState.PlayerDead:
+                OnPlayerDead?.Invoke();
+                break;
         }
     }
 
@@ -113,6 +118,10 @@ public class LevelManager : MonoBehaviour
         if(CurrentState == LevelState.Overview)
         {
             SetState(LevelState.ZoomingIn);
+        }
+        if(CurrentState == LevelState.PlayerDead)
+        {
+            InstantRestart();
         }
     }
 }

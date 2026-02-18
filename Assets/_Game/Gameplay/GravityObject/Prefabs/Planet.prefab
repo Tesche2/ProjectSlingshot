@@ -5124,7 +5124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb9e043b4861184f88cfaece10569e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  config: {fileID: 11400000, guid: 585bc863532a1f14497644a1eaf017fe, type: 2}
+  _config: {fileID: 11400000, guid: 585bc863532a1f14497644a1eaf017fe, type: 2}
+  _camConfig: {fileID: 11400000, guid: a6b74a7d4742550458fc8d2b4006ae8f, type: 2}
 --- !u!114 &1412406802469041661
 MonoBehaviour:
   m_ObjectHideFlags: 0

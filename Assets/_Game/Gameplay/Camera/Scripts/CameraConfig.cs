@@ -4,9 +4,12 @@ using UnityEngine;
 public class CameraConfig : ScriptableObject
 {
     [Header("Overview Camera")]
-    [SerializeField] public float oscillationFrequency = 1.0f;
+    public float oscillationFrequency = 1.0f;
 
     [Header("Follow Camera")]
-    [SerializeField] public float zoomInSpeed = 0.5f;
-    [SerializeField] public float zoomOutSpeed = 5f;
+    public float zoomInSpeed = 0.5f;
+    public float zoomOutSpeed = 5f;
+
+    [Header("Misc")]
+    public float baseOrthographicSize = 5f;
 }

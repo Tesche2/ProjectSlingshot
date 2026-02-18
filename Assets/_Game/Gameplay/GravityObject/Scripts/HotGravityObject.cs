@@ -14,7 +14,10 @@ public class HotGravityObject : GravityObject
         base.FixedUpdate();
 
         if(_playerHeat != null )
-            _playerHeat.HeatUp(_temperature / sqrDistToPlayer);
+        {
+            float dist = Mathf.Sqrt(sqrDistToPlayer);
+            _playerHeat.HeatUp(_temperature / dist);
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D playerCollider)

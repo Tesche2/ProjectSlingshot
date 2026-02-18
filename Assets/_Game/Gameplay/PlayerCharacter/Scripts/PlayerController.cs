@@ -6,13 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(CinemachineImpulseSource))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerConfig config;
+    [SerializeField] private PlayerConfig _config;
 
     public event Action OnThrusterStart;
     public event Action OnThrusterStop;
 
     private Vector2 _currentInputVector;
     private Rigidbody2D _rb;
+
     [HideInInspector] public Vector3 PreviousFramePos { get; private set; }
 
     [HideInInspector] private bool isGravityActive = false;
@@ -55,10 +56,10 @@ public class PlayerController : MonoBehaviour
         if(_currentInputVector != Vector2.zero)
         {
             MovePlayer(_currentInputVector);
-            RotatePlayer(_currentInputVector);
+            RotateSprite(_currentInputVector);
         } else if (_rb.linearVelocity.sqrMagnitude >= 10)
         {
-            RotatePlayer(_rb.linearVelocity);
+            RotateSprite(_rb.linearVelocity);
         }
 
         PreviousFramePos = _rb.position;
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 DefineThrusterForce(Vector2 inputDirection)
     {
-        Vector2 force = inputDirection * config.thrusterForce;
+        Vector2 force = inputDirection * _config.thrusterForce;
         Vector2 vel = _rb.linearVelocity;
 
         // Get colinear and orthogonal components from the force in relation to the velocity.
@@ -81,22 +82,22 @@ public class PlayerController : MonoBehaviour
         // Forwards thrust is limited by current velocity, backwards thrust is strenghened by it, to facilitate stopping
         float colCoeff = Vector2.Dot(colinear, vel) > 0 ?  
             Mathf.Max(0, colinear.magnitude - vel.magnitude) : 
-            Mathf.Max(1, vel.magnitude * config.backwardsCoefficient);
+            Mathf.Max(1, vel.magnitude * _config.backwardsCoefficient);
 
         // Sideways thrust is strenghened by velocity, to facilitate steering
-        float orthCoeff = Mathf.Max(1, vel.magnitude * config.sidewaysCoefficient);
+        float orthCoeff = Mathf.Max(1, vel.magnitude * _config.sidewaysCoefficient);
 
         return colinear * colCoeff + orthogonal * orthCoeff;
     }
 
-    private void RotatePlayer(Vector2 inputDirection)
+    private void RotateSprite(Vector2 inputDirection)
     {
-        float angularDistance = Vector2.SignedAngle(this.transform.up, inputDirection);
+        float angularDistance = Vector2.SignedAngle(transform.up, inputDirection);
         float aV = _rb.angularVelocity;
         float aD = angularDistance;
 
-        float damping = ((aV >= 0 && aD <= 0) || (aV <= 0 && aD >=0)) ? 0.15f : 1f;
-        _rb.AddTorque(angularDistance * config.torqueCoefficient / damping);
+        float damping = ((aV >= 0 && aD <= 0) || (aV <= 0 && aD >= 0)) ? 0.15f : 1f;
+        _rb.AddTorque(angularDistance * _config.torqueCoefficient / damping);
     }
 
     private void HandleThrusterStarted()

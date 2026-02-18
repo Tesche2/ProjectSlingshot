@@ -4,12 +4,13 @@ using UnityEngine;
 public class PlayerConfig : ScriptableObject
 {
     [Header("Movement")]
-    [SerializeField] public float thrusterForce = 5f;
-    [SerializeField] public float sidewaysCoefficient = 0.1f;
-    [SerializeField] public float backwardsCoefficient = 0.2f;
-    [SerializeField] public float torqueCoefficient = 0.05f;
+    public float thrusterForce = 5f;
+    public float sidewaysCoefficient = 0.1f;
+    public float backwardsCoefficient = 0.2f;
+    public float torqueCoefficient = 0.05f;
 
     [Header("Heat")]
-    [SerializeField] public float heatThreshold = 10000f;
-    [SerializeField] public float cooldownRate = 20.0f;
+    public float heatThreshold = 10000f;
+    public float cooldownRate = 20.0f;
+    public float gaugeOpacityThreshold = .2f;
 }

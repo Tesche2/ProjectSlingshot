@@ -289,7 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f3b12635e47f4f94702cb6c9bc56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SplineRenderer
-  config: {fileID: 11400000, guid: 585bc863532a1f14497644a1eaf017fe, type: 2}
+  _config: {fileID: 11400000, guid: 585bc863532a1f14497644a1eaf017fe, type: 2}
+  _camConfig: {fileID: 11400000, guid: a6b74a7d4742550458fc8d2b4006ae8f, type: 2}
 --- !u!1001 &1405516203487198511
 PrefabInstance:
   m_ObjectHideFlags: 0

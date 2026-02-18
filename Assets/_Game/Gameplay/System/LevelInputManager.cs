@@ -8,6 +8,7 @@ public class LevelInputManager : MonoBehaviour
         LevelManager.Instance.OnZoomIn += DisableControls;
         LevelManager.Instance.OnCountdownStart += DisableControls;
         LevelManager.Instance.OnGameplay += EnableGameplayControls;
+        LevelManager.Instance.OnPlayerDead += EnableOverviewControls;
 
         LevelUIManager.Instance.OnMenuOpen += EnableMenuControls;
 

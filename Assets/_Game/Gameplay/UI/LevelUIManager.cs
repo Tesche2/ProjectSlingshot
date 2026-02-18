@@ -46,7 +46,8 @@ public class LevelUIManager : MonoBehaviour
         LevelManager.Instance.OnCountdownStart += EnableCountdown;
         LevelManager.Instance.OnGameplay += GameStarted;
         LevelManager.Instance.OnMenu += EnableGameMenu;
-        LevelManager.Instance.OnFinished += GameEnded; 
+        LevelManager.Instance.OnFinished += GameEnded;
+        LevelManager.Instance.OnPlayerDead += EnableOverviewMessage;
 
         LevelManager.Instance.OnCountdownMessage += DefineCountdownMessage;
         InputDeviceMonitor.Instance.OnDeviceChanged += InputDeviceChanged;
