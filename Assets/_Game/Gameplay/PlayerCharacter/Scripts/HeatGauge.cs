@@ -34,6 +34,8 @@ public class HeatGauge : MonoBehaviour
 
     private void UpdateSliderOpacity()
     {
-        _canvasGroup.alpha = _heatHandler.CurrentTemperature / _config.heatThreshold / _config.gaugeOpacityThreshold;
+        _canvasGroup.alpha = _heatHandler.CurrentTemperature < _config.heatThreshold ?
+            _heatHandler.CurrentTemperature / _config.heatThreshold / _config.gaugeOpacityThreshold:
+            0;
     }
 }

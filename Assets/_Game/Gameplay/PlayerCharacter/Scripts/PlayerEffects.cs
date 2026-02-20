@@ -4,37 +4,52 @@ using UnityEngine;
 public class PlayerEffects : MonoBehaviour
 {
     [Header("Dependencies")]
-    [SerializeField] private PlayerController controller;
+    [SerializeField] private PlayerController _controller;
 
     [Header("VFX")]
-    [SerializeField] private ParticleSystem thrusterParticles;
-    [SerializeField] private CinemachineImpulseSource impulseSource;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private ParticleSystem _thrusterParticles;
+    [SerializeField] private GameObject _explosionParticlesObject;
+    [SerializeField] private CinemachineImpulseSource _impulseSource;
 
-    private void Awake()
-    {
-        thrusterParticles.Stop();
-    }
+    private GameObject _currentThruster;
 
     private void OnEnable()
     {
-        controller.OnThrusterStart += PlayThrusterEffects;
-        controller.OnThrusterStop += StopThrusterEffects;
+        _controller.OnThrusterStart += PlayThrusterEffects;
+        _controller.OnThrusterStop += StopThrusterEffects;
     }
 
     private void OnDisable()
     {
-        controller.OnThrusterStart -= PlayThrusterEffects;
-        controller.OnThrusterStop -= StopThrusterEffects;
+        _controller.OnThrusterStart -= PlayThrusterEffects;
+        _controller.OnThrusterStop -= StopThrusterEffects;
     }
 
     private void PlayThrusterEffects()
     {
-        thrusterParticles.Play();
-        impulseSource.GenerateImpulse();
+        _thrusterParticles.Play();
+        _impulseSource.GenerateImpulse();
     }
 
-    public void StopThrusterEffects()
+    private void StopThrusterEffects()
     {
-        thrusterParticles.Stop(true);
+        _thrusterParticles.Stop(true);
+    }
+
+    public void Explode()
+    {
+        GameObject explosion = Instantiate(_explosionParticlesObject, transform);
+        explosion.transform.SetParent(null);
+        explosion.transform.localScale *= 3;
+        explosion.SetActive(true);
+        _spriteRenderer.enabled = false;
+    }
+
+    public void Respawn()
+    {
+        StopThrusterEffects();
+        _spriteRenderer.enabled = true;
+
     }
 }

@@ -35,15 +35,14 @@ public class PlayerLevelHandler : MonoBehaviour
         _controller.transform.position = _initialPos;
         _controller.transform.rotation = _initialRot;
         _controller.ResetPhysics();
-        if(_effects) _effects.StopThrusterEffects();
+        _effects.Respawn();
         _heatHandler.ResetTemperature();
     }
 
     private void KillPlayer()
     {
-        Debug.Log("PLAYER SPLODED");
         _controller.ResetPhysics();
-        if (_effects) _effects.StopThrusterEffects();
+        _effects.Explode();
         LevelManager.Instance.SetState(LevelState.PlayerDead);
     }
 }

@@ -59,4 +59,4 @@
 ---
 *Developed by [Nikolas Tesche](https://www.linkedin.com/in/nikolas-tesche-3112b9167)*
 <br>
-*Placeholder art by [DanProps](https://assetstore.unity.com/packages/2d/gui/space-game-gui-kit-psd-315973)*
+*Placeholder art by [DanProps](https://assetstore.unity.com/packages/2d/gui/space-game-gui-kit-psd-315973) and [Jean Moreno](https://assetstore.unity.com/packages/vfx/particles/cartoon-fx-remaster-free-109565)*
