@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.Splines;
 
-[RequireComponent(typeof(LineRenderer)), RequireComponent(typeof(SplineContainer))]
+[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(SplineContainer))]
 public class SplineRenderer : MonoBehaviour
 {
     [SerializeField] private GravityObjectConfig _config;
     [SerializeField] private CameraConfig _camConfig;
-
+    
     private SplineContainer _splineContainer;
     private LineRenderer _lineRenderer;
     private Camera _cam;

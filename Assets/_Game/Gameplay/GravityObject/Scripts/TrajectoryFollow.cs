@@ -11,6 +11,10 @@ public class TrajectoryFollow : MonoBehaviour
     private void Awake()
     {
         _splineAnimate = GetComponent<SplineAnimate>();
+    }
+
+    private void Start()
+    {
         _splineAnimate.ElapsedTime = 0;
     }
     private void OnEnable()
@@ -33,23 +37,30 @@ public class TrajectoryFollow : MonoBehaviour
 
     private IEnumerator MoveObject()
     {
-        // Reset object
-        float currentTime = 0;
-        _splineAnimate.ElapsedTime = 0;
-        float duration = _splineAnimate.Duration; // Ensure it respects the duration set in SplineAnimate
+        // Ensure it respects the duration and loop mode set in SplineAnimate
+        float duration = _splineAnimate.Duration;
+        SplineAnimate.LoopMode loopMode = _splineAnimate.Loop;
 
-        while (currentTime < duration)
+        do
         {
-            // Move object along the spline, reading the _positionCurve to make it easier to control the object's speed
-            currentTime += Time.fixedDeltaTime;
+            // Reset object
+            float currentTime = 0;
+            _splineAnimate.ElapsedTime = 0;
 
-            float normalizedTime = Mathf.Clamp01(currentTime / duration);
-            float pos = _positionCurve.Evaluate(normalizedTime);
+            while (currentTime < duration)
+            {
+                // Move object along the spline, reading the _positionCurve to make it easier to control the object's speed
+                currentTime += Time.fixedDeltaTime;
 
-            _splineAnimate.ElapsedTime = pos * duration;
+                float normalizedTime = Mathf.Clamp01(currentTime / duration);
+                float pos = _positionCurve.Evaluate(normalizedTime);
+
+                _splineAnimate.ElapsedTime = pos * duration;
             
-            yield return new WaitForFixedUpdate();
-        }
+                yield return new WaitForFixedUpdate();
+            }
+
+        } while(loopMode == SplineAnimate.LoopMode.Loop);
         
         // Ensure it always reaches the end
         _splineAnimate.ElapsedTime = duration;

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 393684812389366130}
   - component: {fileID: 2729074121302963889}
-  - component: {fileID: 976599319783350146}
   - component: {fileID: 7955058135949681849}
   - component: {fileID: 8768339810427275553}
   - component: {fileID: 616701838322459593}
@@ -48,20 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f85c90f79f5a344ad9a8e7dd25ff20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
---- !u!114 &976599319783350146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3538397202976846508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f43eda2e32d284f97e4306903a6e7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerLevelHandler
-  _controller: {fileID: 0}
-  _effects: {fileID: 0}
 --- !u!114 &7955058135949681849
 MonoBehaviour:
   m_ObjectHideFlags: 0

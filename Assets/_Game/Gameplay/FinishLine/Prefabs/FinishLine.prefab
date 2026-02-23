@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 7737484883262778387}
   - component: {fileID: 4171614903918395097}
   - component: {fileID: 8933419283778511841}
-  - component: {fileID: 391361995205434260}
   - component: {fileID: 8273818410810700846}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FinishLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,18 +139,6 @@ BoxCollider2D:
   m_AutoTiling: 1
   m_Size: {x: 16, y: 16}
   m_EdgeRadius: 0
---- !u!114 &391361995205434260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8416537840383758603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d9906eb62b43864e854cd7f7a7526b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FinishLineShaderAux
 --- !u!114 &8273818410810700846
 MonoBehaviour:
   m_ObjectHideFlags: 0

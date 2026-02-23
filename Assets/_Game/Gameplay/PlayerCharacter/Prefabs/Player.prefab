@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6082171826547634266}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 3578453076915742636}
   - component: {fileID: 1786341921348314791}
   - component: {fileID: 2869698724758876403}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HeatBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 3201541718157835160}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.55699, y: -0.56176, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 8282366035137224481}
   - component: {fileID: 544787939501643401}
   - component: {fileID: 7992945006070602633}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 2746262240146033164}
   - component: {fileID: 6302370923566280323}
   - component: {fileID: 7945289608850413667}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 4307320986115913287}
   - component: {fileID: 5492603492801570828}
   - component: {fileID: 4025430014192119158}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,9 @@ GameObject:
   - component: {fileID: 3702799029814144056}
   - component: {fileID: 3450465292131510028}
   - component: {fileID: 7423444835394161626}
-  m_Layer: 7
+  - component: {fileID: 509793900976015930}
+  - component: {fileID: 8742325079752056181}
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,10 +509,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -584,6 +586,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HeatHandler
   _config: {fileID: 11400000, guid: 7ad33a7b5df00f048874765b8a4a06cf, type: 2}
   isInHeatField: 0
+--- !u!114 &509793900976015930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7574299396874114134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f43eda2e32d284f97e4306903a6e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLevelHandler
+  _controller: {fileID: 3450465292131510028}
+  _effects: {fileID: 5070392323305364115}
+  _heatHandler: {fileID: 7423444835394161626}
+--- !u!58 &8742325079752056181
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7574299396874114134}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 1
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.0001
 --- !u!1 &7692869238659572311
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +648,7 @@ GameObject:
   - component: {fileID: 8097226493881302482}
   - component: {fileID: 8959332400454284245}
   - component: {fileID: 7836049293516016647}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: SpriteContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +664,7 @@ Transform:
   m_GameObject: {fileID: 7692869238659572311}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.55699, y: 0.56176, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -740,7 +793,7 @@ GameObject:
   - component: {fileID: 5355462162908030632}
   - component: {fileID: 2929373379414005180}
   - component: {fileID: 8281095927115524024}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: DynamicallyScaledElements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6296941719097425977}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: HeatGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -832,17 +885,33 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7684677543225702287, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8764043878647920493, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
       propertyPath: m_Name
       value: CFXR Fire Breath
       objectReference: {fileID: 0}
+    - target: {fileID: 8764043878647920493, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764373218812076563, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764473058345964675, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8767152486562788127, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.55699
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8767152486562788127, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.14769
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8767152486562788127, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
       propertyPath: m_LocalPosition.z
