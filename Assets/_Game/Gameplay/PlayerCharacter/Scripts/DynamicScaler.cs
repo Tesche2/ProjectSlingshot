@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DynamicScaler : MonoBehaviour
 {
-    [SerializeField] private CameraConfig _camConfig;
+    [SerializeField] private float baseScale = 5f;
 
     private Camera _cam;
 
@@ -14,9 +14,9 @@ public class DynamicScaler : MonoBehaviour
     private void Update()
     {
         transform.localScale = new Vector3(
-            _cam.orthographicSize / _camConfig.baseOrthographicSize,
-            _cam.orthographicSize / _camConfig.baseOrthographicSize,
-            _cam.orthographicSize / _camConfig.baseOrthographicSize
+            _cam.orthographicSize / baseScale,
+            _cam.orthographicSize / baseScale,
+            _cam.orthographicSize / baseScale
             );
     }
 }

@@ -10,7 +10,6 @@ public class OutlineRenderer : MonoBehaviour
     private LineRenderer _lineRenderer;
     private Camera _cam;
     private float _baseCircumference;
-    private GameObject _player;
 
     private void Awake()
     {
@@ -20,29 +19,27 @@ public class OutlineRenderer : MonoBehaviour
 
         _cam = Camera.main;
 
-        _player = FindFirstObjectByType<PlayerController>().gameObject;
-
         // Get the circumference of the region based on its scale
         _baseCircumference = Mathf.PI * transform.localScale.x * transform.parent.localScale.x;
 
         DrawCircle();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         // Ensure line width remains constant regardless of camera distance
-        _lineRenderer.startWidth = _config.baseOutlineWidth * _cam.orthographicSize / _camConfig.baseOrthographicSize;
+        _lineRenderer.startWidth = _config.baseOutlineWidth * _cam.orthographicSize;
 
-        // Rotate outline towards the player, this helps hide the fact that dashes spawn and disappear all in the same spot
-        Vector3 directionToPlayer = _player.transform.position - transform.position;
-        transform.right = directionToPlayer;
+        // Rotate outline towards the camera, this helps hide the fact that dashes spawn and disappear all in the same spot
+        Vector2 directionToCamera = (Vector2) _cam.transform.position - (Vector2) transform.position;
+        transform.right = directionToCamera;
 
         // Find the size of the circumference on the screen
-        float _visualCircumference = _baseCircumference * _camConfig.baseOrthographicSize / _cam.orthographicSize;
+        float visualCircumference = _baseCircumference / _cam.orthographicSize;
 
         // Calculate the number of dashes that should be displayed and scale texture accordingly
-        float _numberOfDashes = Mathf.Max(_config.minOutlineSegments, (int) (_visualCircumference / _config.baseOutlineDashLength));
-        _lineRenderer.textureScale = new Vector2(_numberOfDashes / _baseCircumference, 1);
+        float numberOfDashes = Mathf.Max(_config.minOutlineSegments, (int) (visualCircumference / _config.baseOutlineDashLength));
+        _lineRenderer.textureScale = new Vector2(numberOfDashes / _baseCircumference, 1);
     }
 
     private void DrawCircle()

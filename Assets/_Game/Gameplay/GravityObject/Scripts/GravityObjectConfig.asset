@@ -15,8 +15,8 @@ MonoBehaviour:
   escapeAssistCoefficient: 0.001
   outlineSegments: 50
   minOutlineSegments: 3
-  baseOutlineWidth: 0.1
-  baseOutlineDashLength: 1.5
+  baseOutlineWidth: 0.02
+  baseOutlineDashLength: 0.3
   splineSegments: 50
-  baseSplineWidth: 0.2
-  baseSplineDashLength: 1
+  baseSplineWidth: 0.04
+  baseSplineDashLength: 0.2
