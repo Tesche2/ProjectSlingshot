@@ -42,7 +42,7 @@ public class OutlineRenderer : MonoBehaviour
 
         // Calculate the number of dashes that should be displayed and scale texture accordingly
         float _numberOfDashes = Mathf.Max(_config.minOutlineSegments, (int) (_visualCircumference / _config.baseOutlineDashLength));
-        _lineRenderer.textureScale = new Vector2(_numberOfDashes / _baseCircumference, 0);
+        _lineRenderer.textureScale = new Vector2(_numberOfDashes / _baseCircumference, 1);
     }
 
     private void DrawCircle()

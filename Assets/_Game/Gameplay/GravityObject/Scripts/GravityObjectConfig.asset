@@ -18,5 +18,5 @@ MonoBehaviour:
   baseOutlineWidth: 0.1
   baseOutlineDashLength: 1.5
   splineSegments: 50
-  baseSplineWidth: 0.05
-  baseSplineDashLength: 0.6
+  baseSplineWidth: 0.2
+  baseSplineDashLength: 1

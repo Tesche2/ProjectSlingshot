@@ -21,7 +21,10 @@ public class SplineRenderer : MonoBehaviour
         _cam = Camera.main;
 
         _spline = _splineContainer.Spline;
+    }
 
+    private void Start()
+    {
         DrawSpline();
     }
 
@@ -32,7 +35,18 @@ public class SplineRenderer : MonoBehaviour
 
         // Calculate the length of dashes based on camera distance and scale texture accordingly
         float _dashLength = _camConfig.baseOrthographicSize / (_cam.orthographicSize * _config.baseSplineDashLength);
-        _lineRenderer.textureScale = new Vector2(_dashLength, 0);
+        _lineRenderer.textureScale = new Vector2(_dashLength, 1);
+    }
+
+    private void OnValidate()
+    {
+        if (_splineContainer == null) _splineContainer = GetComponent<SplineContainer>();
+        if (_lineRenderer == null) _lineRenderer = GetComponent<LineRenderer>();
+        if (_cam == null) _cam = Camera.main;
+
+        _spline = _splineContainer.Spline;
+
+        DrawSpline();
     }
 
     private void DrawSpline()
@@ -41,7 +55,7 @@ public class SplineRenderer : MonoBehaviour
         for (int i = 0; i < _config.splineSegments; i++)
         {
             // Calculate normalized position along the spline
-            float t = i / (float)(_config.splineSegments - 1);
+            float t = i / (float)(_config.splineSegments);
             Vector3 position = _spline.EvaluatePosition(t);
 
             // Set the position in the line renderer
